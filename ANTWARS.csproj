@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ally.cs" />
+    <Compile Include="AllyBase.cs" />
+    <Compile Include="ColonyPool.cs" />
+    <Compile Include="ColonyProto.cs" />
+    <Compile Include="Fractions.cs" />
+    <Compile Include="Levels.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

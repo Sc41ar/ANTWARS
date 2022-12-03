@@ -28,20 +28,33 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
+			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.SuspendLayout();
+			// 
+			// timer1
+			// 
+			this.timer1.Interval = 20;
+			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
 			// GameForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.SystemColors.ControlDark;
+			this.BackgroundImage = global::ANTWARS.Resource1.texture_green_grass_surface_wallpaper_concept;
+			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.ClientSize = new System.Drawing.Size(800, 450);
 			this.Name = "GameForm";
 			this.Text = "GameForm";
 			this.Deactivate += new System.EventHandler(this.GameForm_Deactivate);
+			this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameForm_Paint);
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
+
+		private System.Windows.Forms.Timer timer1;
 	}
 }
