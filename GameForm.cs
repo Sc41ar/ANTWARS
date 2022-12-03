@@ -13,6 +13,7 @@ namespace ANTWARS
 {
 	public partial class GameForm : Form
 	{
+		MainForm mainf;
 		public GameForm()
 		{
 			InitializeComponent();
@@ -21,11 +22,12 @@ namespace ANTWARS
 		public GameForm(MainForm mf)
 		{
 			InitializeComponent();
+			mainf = mf;
 		}
 
 		private void GameForm_Deactivate(object sender, EventArgs e)
 		{
-			
+			mainf.Show();
 		}
 	}
 }

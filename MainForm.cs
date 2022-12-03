@@ -19,7 +19,7 @@ namespace ANTWARS
 
 		private void GameStart_Click(object sender, EventArgs e)
 		{
-			GameForm gameForm = new GameForm();
+			GameForm gameForm = new GameForm(this);
 			gameForm.Show();
 			this.Hide();
 		}
