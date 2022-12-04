@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ANTWARS
 {
-	internal enum Levels
+	public enum Levels
 	{
 		first = 1,
 		second,

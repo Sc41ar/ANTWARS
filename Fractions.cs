@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ANTWARS
 {
-	internal enum Fractions
+	public enum Fractions
 	{
 		player,
+		neutral,
 		oliveEnemy,
 		blueEnemy,
-		tanEnemy,
 		redEnemy,
 		indigoEnemy
 	}

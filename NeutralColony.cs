@@ -1,9 +1,10 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace ANTWARS
 {
-	abstract class ColonyProto
+	public abstract class NeutralColony : Control
 	{
 		public int Population { get; set; }
 		public int PopulationGrowthSpeed { get; set; }
@@ -28,13 +29,13 @@ namespace ANTWARS
 		public int PopulationLimit { get; set; }
 		public Levels Levels { get; set; }
 
-		ColonyProto()
+		NeutralColony()
 		{
 			Population = 20;
 			PopulationGrowthSpeed = 1;
 			PopulationLimit = 20;
 			IsAttacked = false;
-			_fraction = (Fractions)1;
+			_fraction = Fractions.neutral;
 			Position = new Point(0, 0);
 			Levels = Levels.first;
 		}

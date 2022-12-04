@@ -46,10 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ally.cs" />
+    <Compile Include="Ally.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="AllyBase.cs" />
     <Compile Include="ColonyPool.cs" />
-    <Compile Include="ColonyProto.cs" />
+    <Compile Include="NeutralColony.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Fractions.cs" />
     <Compile Include="Levels.cs" />
     <Compile Include="MainForm.cs">
@@ -168,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\blueEnemy2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Neutral.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
