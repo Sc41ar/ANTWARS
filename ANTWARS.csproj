@@ -176,5 +176,8 @@
   <ItemGroup>
     <None Include="Resources\Neutral.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pexels-daniel-absi-952670.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

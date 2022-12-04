@@ -1,11 +1,14 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 
 namespace ANTWARS
 {
-	public abstract class NeutralColony : Control
+	public class NeutralColony : Control
 	{
+		protected StringFormat _format = new StringFormat();
+		protected bool _isMouseEntered = false;
 		public int Population { get; set; }
 		public int PopulationGrowthSpeed { get; set; }
 
@@ -24,27 +27,67 @@ namespace ANTWARS
 
 		public bool IsAttacked { get; set; }
 
-		public Point Position { get; set; }
 
 		public int PopulationLimit { get; set; }
 		public Levels Levels { get; set; }
 
-		NeutralColony()
+		public Bitmap ColonySprite { get; set; }
+
+		public NeutralColony()
 		{
 			Population = 20;
 			PopulationGrowthSpeed = 1;
 			PopulationLimit = 20;
 			IsAttacked = false;
 			_fraction = Fractions.neutral;
-			Position = new Point(0, 0);
 			Levels = Levels.first;
+			Size = new Size(100, 100);
+			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
+				| ControlStyles.UserPaint, true);
+			ColonySprite = Resource1.Neutral;
+			BackColor = Color.Transparent;
+			BackgroundImage = Resource1.Neutral;
+			BackgroundImageLayout = ImageLayout.Stretch;
+			_format.Alignment = StringAlignment.Center;
+			_format.LineAlignment = StringAlignment.Center;
+
+			Text = Population.ToString() + "/" + PopulationLimit.ToString();
 		}
 
 		public void PopulationGrowth()
 		{
-			Population += PopulationGrowthSpeed;
+			if (Population < PopulationLimit)
+				Population += PopulationGrowthSpeed;
+			Text = Population.ToString() + "/" + PopulationLimit.ToString();
+		}
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			base.OnPaint(e);
+			Graphics g = e.Graphics;
+			Text = Population.ToString() + "/" + PopulationLimit.ToString();
+			var localPos = this.PointToClient(Location);
+			g.SmoothingMode = SmoothingMode.HighQuality;
+			if (_isMouseEntered)
+			{
+				g.DrawEllipse(new Pen(Color.MediumAquamarine, 2f),
+					new Rectangle(0, 0, Width, Height));
+				g.DrawString(Text, Font, new SolidBrush(Color.Crimson),
+					Width / 2, Height / 2, _format);
+			}
 		}
 
+		protected override void OnMouseEnter(EventArgs e)
+		{
+			base.OnMouseEnter(e);
+			_isMouseEntered = true;
+			Invalidate();
+		}
 
+		protected override void OnMouseLeave(EventArgs e)
+		{
+			base.OnMouseLeave(e);
+			_isMouseEntered = false;
+			Invalidate();
+		}
 	}
 }

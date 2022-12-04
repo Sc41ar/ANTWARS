@@ -19,6 +19,12 @@ namespace ANTWARS
 		public GameForm()
 		{
 			InitializeComponent();
+			this.Paint += GameForm_Paint;
+		}
+
+		private void GameForm_Paint1(object sender, PaintEventArgs e)
+		{
+			throw new NotImplementedException();
 		}
 
 		public GameForm(MainForm mf)
@@ -32,17 +38,23 @@ namespace ANTWARS
 			mainf.Show();
 		}
 
-		private void GameForm_Paint(object sender, PaintEventArgs e)
+		internal void GameForm_Paint(object sender, PaintEventArgs e)
 		{
+			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
+				| ControlStyles.UserPaint, true);
 			Graphics g = e.Graphics;
+			var form = sender as GameForm;
+		}
+
+		private void ally1_DragLeave(object sender, EventArgs e)
+		{
 			
-			g.DrawImage(t1, new Rectangle(20, 20, 100, 100));
-			g.DrawImage(t2 , new Rectangle(500, 350, 100, 100));
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)
 		{
-			Refresh();
+			//Refresh();
+			ally1.Invalidate();
 		}
 	}
 }

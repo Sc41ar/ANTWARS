@@ -144,6 +144,16 @@ namespace ANTWARS {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Neutral {
+            get {
+                object obj = ResourceManager.GetObject("Neutral", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap oliveEnemy {
             get {
                 object obj = ResourceManager.GetObject("oliveEnemy", resourceCulture);
@@ -167,6 +177,16 @@ namespace ANTWARS {
         internal static System.Drawing.Bitmap oliveEnemy3 {
             get {
                 object obj = ResourceManager.GetObject("oliveEnemy3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pexels_daniel_absi_952670 {
+            get {
+                object obj = ResourceManager.GetObject("pexels_daniel_absi_952670", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
