@@ -69,7 +69,10 @@ namespace ANTWARS
 			foreach (var item in Colonies)
 			{
 				if (item is Ally)
+				{
 					item.PopulationGrowth();
+					item.Invalidate();
+				}
 			}
 		}
 	}

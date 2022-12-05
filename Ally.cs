@@ -43,7 +43,7 @@ namespace ANTWARS
 			PopulationGrowthSpeed = 1;
 			AttackSpeed = 20;
 			Location = location;
-			PopulationLimit = 30;
+			PopulationLimit = 30000;
 			Money = 0;
 			Fraction = Fractions.player;
 			Levels = level;
@@ -98,7 +98,6 @@ namespace ANTWARS
 
 			Invalidate();
 		}
-
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			base.OnMouseUp(e);
