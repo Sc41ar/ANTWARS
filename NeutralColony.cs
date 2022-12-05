@@ -31,8 +31,6 @@ namespace ANTWARS
 		public int PopulationLimit { get; set; }
 		public Levels Levels { get; set; }
 
-		public Bitmap ColonySprite { get; set; }
-
 		public NeutralColony()
 		{
 			Population = 20;
@@ -44,7 +42,6 @@ namespace ANTWARS
 			Size = new Size(100, 100);
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
-			ColonySprite = Resource1.Neutral;
 			BackColor = Color.Transparent;
 			BackgroundImage = Resource1.Neutral;
 			BackgroundImageLayout = ImageLayout.Stretch;
@@ -54,6 +51,26 @@ namespace ANTWARS
 			Text = Population.ToString() + "/" + PopulationLimit.ToString();
 		}
 
+		public NeutralColony(Point location, int population, Levels level)
+		{
+			Population = population;
+			Location = location;
+			PopulationGrowthSpeed = 1;
+			PopulationLimit = 20;
+			IsAttacked = false;
+			_fraction = Fractions.neutral;
+			Levels = level;
+			Size = new Size(100, 100);
+			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
+				| ControlStyles.UserPaint, true);
+			BackColor = Color.Transparent;
+			BackgroundImage = Resource1.blueEnemy;
+			BackgroundImageLayout = ImageLayout.Stretch;
+			_format.Alignment = StringAlignment.Center;
+			_format.LineAlignment = StringAlignment.Center;
+
+			Text = Population.ToString() + "/" + PopulationLimit.ToString();
+		}
 		public void PopulationGrowth()
 		{
 			if (Population < PopulationLimit)
@@ -65,14 +82,14 @@ namespace ANTWARS
 			base.OnPaint(e);
 			Graphics g = e.Graphics;
 			Text = Population.ToString() + "/" + PopulationLimit.ToString();
-			var localPos = this.PointToClient(Location);
 			g.SmoothingMode = SmoothingMode.HighQuality;
+
+			g.DrawString(Text, Font, new SolidBrush(Color.Crimson),
+				Width / 2, Height / 2, _format);
 			if (_isMouseEntered)
 			{
 				g.DrawEllipse(new Pen(Color.MediumAquamarine, 2f),
 					new Rectangle(0, 0, Width, Height));
-				g.DrawString(Text, Font, new SolidBrush(Color.Crimson),
-					Width / 2, Height / 2, _format);
 			}
 		}
 
@@ -81,6 +98,7 @@ namespace ANTWARS
 			base.OnMouseEnter(e);
 			_isMouseEntered = true;
 			Invalidate();
+			
 		}
 
 		protected override void OnMouseLeave(EventArgs e)
@@ -88,6 +106,12 @@ namespace ANTWARS
 			base.OnMouseLeave(e);
 			_isMouseEntered = false;
 			Invalidate();
+		}
+
+		protected override void OnMouseHover(EventArgs e)
+		{
+			base.OnMouseHover(e);
+			
 		}
 	}
 }

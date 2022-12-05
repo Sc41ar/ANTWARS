@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace ANTWARS
@@ -11,7 +12,7 @@ namespace ANTWARS
 	{
 		int Money { get; set; }
 		int AttackSpeed { get; set; }
-
+		internal bool _isMouseDown = false;
 
 		public Ally()
 		{
@@ -27,7 +28,6 @@ namespace ANTWARS
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
 			DoubleBuffered = true;
-			ColonySprite = Resource1.player1;
 			BackColor = Color.Transparent;
 			ForeColor = Color.BlueViolet;
 			BackgroundImage = Resource1.player1;
@@ -35,6 +35,28 @@ namespace ANTWARS
 			_format.Alignment = StringAlignment.Center;
 			_format.LineAlignment = StringAlignment.Center;
 			//Font
+		}
+
+		public Ally(Point location, int population, Levels level)
+		{
+			Population = population;
+			PopulationGrowthSpeed = 1;
+			AttackSpeed = 20;
+			Location = location;
+			PopulationLimit = 30;
+			Money = 0;
+			Fraction = Fractions.player;
+			Levels = level;
+			Size = new Size(100, 100);
+			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
+				| ControlStyles.UserPaint, true);
+			DoubleBuffered = true;
+			BackColor = Color.Transparent;
+			ForeColor = Color.BlueViolet;
+			BackgroundImage = Resource1.player1;
+			BackgroundImageLayout = ImageLayout.Stretch;
+			_format.Alignment = StringAlignment.Center;
+			_format.LineAlignment = StringAlignment.Center;
 		}
 
 		void Upgrade()
@@ -49,36 +71,71 @@ namespace ANTWARS
 			Text = Population.ToString() + "/" + PopulationLimit.ToString();
 			var cursorPos = this.PointToClient(Cursor.Position);
 			g.SmoothingMode = SmoothingMode.HighQuality;
+
+			g.DrawString(Text, Font, new SolidBrush(ForeColor),
+				Width / 2, Height / 2, _format);
 			if (_isMouseEntered)
 			{
 				g.DrawEllipse(new Pen(Color.MediumAquamarine, 2f),
 					new Rectangle(0, 0, Width, Height));
-				g.DrawString(Text, Font, new SolidBrush(ForeColor),
-					Width / 2, Height / 2, _format);
 			}
-			if (IsAttacked)
-			{
-				var form = this.Parent as GameForm;
-				if (form != null)
-				{
-					Graphics graphics = Graphics.FromHwnd(form.Handle);
-					graphics.DrawLine(new Pen(ForeColor, 2f), 
-						Location, this.PointToClient(Cursor.Position));
-				}
-			}
+			//if (_isMouseDown)
+			//{
+			//	var form = this.Parent as GameForm;
+			//	if (form != null)
+			//	{
+			//		Graphics graphics = Graphics.FromHwnd(form.Handle);
+			//		graphics.DrawLines(new Pen(ForeColor, 2f), 
+			//			Location, this.PointToClient(Cursor.Position));
+			//	}
+			//}
 		}
 
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			base.OnMouseDown(e);
-			IsAttacked = true;
+			_isMouseDown = true;
+
 			Invalidate();
 		}
 
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			base.OnMouseUp(e);
-			IsAttacked = false;
+			_isMouseDown = false;
+			var form = this.Parent as GameForm;
+			var currentMousePos = form.PointToClient(Cursor.Position);
+			foreach (Control control in form.Controls)
+			{
+				if (control is NeutralColony)
+				{
+					var target = control as NeutralColony;
+					var targetLoc = target.Location;
+					if (currentMousePos.X <= targetLoc.X + target.Width &&
+						currentMousePos.X >= targetLoc.X &&
+						currentMousePos.Y >= targetLoc.Y &&
+						currentMousePos.Y <= targetLoc.Y + target.Height &&
+						Population >= target.Population)
+					{
+
+						Ally ally = new Ally(target.Location, 
+							(Population - target.Population), Levels.first);
+						ally.Location = target.Location;
+						ally.Parent = this.Parent;
+						ally.Show();
+						ally.Invalidate();
+						Population = 0;
+						form.Colonies.Add(ally);
+						form.Controls.Add(ally);
+						form.Colonies.Remove(target);
+						form.Controls.Remove(target);
+						target.Fraction = Fractions.player;
+						target.BackgroundImage = Resource1.player1;
+						target.Hide();
+						target.Invalidate();
+					}
+				}
+			}
 			Invalidate();
 		}
 	}
