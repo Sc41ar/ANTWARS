@@ -43,7 +43,7 @@ namespace ANTWARS
 			PopulationGrowthSpeed = 1;
 			AttackSpeed = 20;
 			Location = location;
-			PopulationLimit = 30000;
+			PopulationLimit = 30;
 			Money = 0;
 			Fraction = Fractions.player;
 			Levels = level;
@@ -106,33 +106,58 @@ namespace ANTWARS
 			var currentMousePos = form.PointToClient(Cursor.Position);
 			foreach (Control control in form.Controls)
 			{
-				if (control is NeutralColony)
+				if (control is NeutralColony && !(control is Ally))
 				{
 					var target = control as NeutralColony;
 					var targetLoc = target.Location;
 					if (currentMousePos.X <= targetLoc.X + target.Width &&
 						currentMousePos.X >= targetLoc.X &&
 						currentMousePos.Y >= targetLoc.Y &&
-						currentMousePos.Y <= targetLoc.Y + target.Height &&
-						Population >= target.Population)
+						currentMousePos.Y <= targetLoc.Y + target.Height)
 					{
+						if (Population >= target.Population)
+						{
 
-						Ally ally = new Ally(target.Location, 
-							(Population - target.Population), Levels.first);
-						ally.Location = target.Location;
-						ally.Parent = this.Parent;
-						ally.Show();
-						ally.Invalidate();
+							Ally ally = new Ally(target.Location,
+								(Population - target.Population), Levels.first);
+							ally.Location = target.Location;
+							ally.Parent = this.Parent;
+							ally.Invalidate();
+							Population = 0;
+							form.Colonies.Add(ally);
+							form.Controls.Add(ally);
+							form.Colonies.Remove(target);
+							form.Controls.Remove(target);
+							target.Fraction = Fractions.player;
+							target.BackgroundImage = Resource1.player1;
+							target.Invalidate();
+						}
+						else
+						{
+							target.Population -= Population;
+							Population = 0;
+							Invalidate();
+						}
+					}
+				}
+				if (control is Ally)
+				{
+					var target = control as NeutralColony;
+					var targetLoc = target.Location;
+					if (currentMousePos.X <= targetLoc.X + target.Width &&
+						currentMousePos.X >= targetLoc.X &&
+						currentMousePos.Y >= targetLoc.Y &&
+						currentMousePos.Y <= targetLoc.Y + target.Height)
+					{
+						target.Population = (target.Population + Population) > target.PopulationLimit ?
+							target.PopulationLimit :
+							(target.Population + Population);
 						Population = 0;
-						form.Colonies.Add(ally);
-						form.Controls.Add(ally);
-						form.Colonies.Remove(target);
-						form.Controls.Remove(target);
-						target.Fraction = Fractions.player;
-						target.BackgroundImage = Resource1.player1;
-						target.Hide();
+						Invalidate();
 						target.Invalidate();
 					}
+
+
 				}
 			}
 			Invalidate();

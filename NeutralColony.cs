@@ -64,7 +64,7 @@ namespace ANTWARS
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
 			BackColor = Color.Transparent;
-			BackgroundImage = Resource1.blueEnemy;
+			BackgroundImage = Resource1.Neutral;
 			BackgroundImageLayout = ImageLayout.Stretch;
 			_format.Alignment = StringAlignment.Center;
 			_format.LineAlignment = StringAlignment.Center;

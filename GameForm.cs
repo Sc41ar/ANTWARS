@@ -31,8 +31,11 @@ namespace ANTWARS
 			InitializeComponent();
 			mainf = mf;
 			Colonies = new List<NeutralColony>();
-			Colonies.Add(new Ally(new Point(75, 100), 200, Levels.first));
+			Colonies.Add(new Ally(new Point(75, 100), 20, Levels.first));
 			Colonies.Add(new NeutralColony(new Point(225, 300), 10, Levels.first));
+			Colonies.Add(new NeutralColony(new Point(125, 540), 10, Levels.first));
+			Colonies.Add(new NeutralColony(new Point(125, 200), 10, Levels.first));
+			Colonies.Add(new NeutralColony(new Point(225, 100), 10, Levels.first));
 		}
 
 		private void GameForm_Deactivate(object sender, EventArgs e)
