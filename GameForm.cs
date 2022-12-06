@@ -38,6 +38,13 @@ namespace ANTWARS
 			Colonies.Add(new NeutralColony(new Point(225, 100), 10, Levels.first));
 		}
 
+		public void AddAllyColony(Point location, int population, Levels level)
+		{
+			
+			Colonies.Add(new Ally(location, population, Levels.first));
+			Update();
+		}
+
 		private void GameForm_Deactivate(object sender, EventArgs e)
 		{
 			mainf.Show();
@@ -69,13 +76,14 @@ namespace ANTWARS
 
 		private void timer1_Tick(object sender, EventArgs e)
 		{
-			foreach (var item in Colonies)
+			var Allies = 
+				from t in Colonies
+				where t is Ally
+				select t;
+			foreach (var item in Allies)
 			{
-				if (item is Ally)
-				{
 					item.PopulationGrowth();
 					item.Invalidate();
-				}
 			}
 		}
 	}

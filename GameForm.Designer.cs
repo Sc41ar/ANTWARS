@@ -42,7 +42,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.BackgroundImage = global::ANTWARS.Resource1.hmADm_mDdpTr3SYiT6a4YYSZUKa_wfeJ_UukU_55StHj3RthXKAQVX3ujTV5s3qOhS3n8pkFzeAa6WLPtphhERIh;
+			this.BackgroundImage = global::ANTWARS.Resource1.texture_green_grass_surface_wallpaper_concept;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.ClientSize = new System.Drawing.Size(800, 450);
 			this.ForeColor = System.Drawing.Color.Red;

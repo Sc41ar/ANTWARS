@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
+using System.Threading;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
 
@@ -13,7 +14,6 @@ namespace ANTWARS
 		int Money { get; set; }
 		int AttackSpeed { get; set; }
 		internal bool _isMouseDown = false;
-
 		public Ally()
 		{
 			Population = 20;
@@ -24,7 +24,7 @@ namespace ANTWARS
 			Money = 0;
 			Fraction = Fractions.player;
 			Levels = Levels.first;
-			Size = new Size(100, 100);
+			Size = new Size(150, 100);
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
 			DoubleBuffered = true;
@@ -47,7 +47,7 @@ namespace ANTWARS
 			Money = 0;
 			Fraction = Fractions.player;
 			Levels = level;
-			Size = new Size(100, 100);
+			Size = new Size(70, 70);
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
 			DoubleBuffered = true;
@@ -78,6 +78,16 @@ namespace ANTWARS
 			{
 				g.DrawEllipse(new Pen(Color.MediumAquamarine, 2f),
 					new Rectangle(0, 0, Width, Height));
+			}
+			if(_isMouseDown)
+			{
+				var form = this.Parent;
+				Panel panel = new Panel();
+				panel.BackColor = Color.BlueViolet;
+				panel.Parent = form;
+				panel.Size = form.ClientSize;
+				Thread.Sleep(155);
+				panel.Parent = null;
 			}
 			//if (_isMouseDown)
 			//{
@@ -117,19 +127,11 @@ namespace ANTWARS
 					{
 						if (Population >= target.Population)
 						{
-
-							Ally ally = new Ally(target.Location,
-								(Population - target.Population), Levels.first);
-							ally.Location = target.Location;
-							ally.Parent = this.Parent;
-							ally.Invalidate();
+							form.AddAllyColony(targetLoc, 
+								Population - target.Population, Levels.first);
 							Population = 0;
-							form.Colonies.Add(ally);
-							form.Controls.Add(ally);
 							form.Colonies.Remove(target);
 							form.Controls.Remove(target);
-							target.Fraction = Fractions.player;
-							target.BackgroundImage = Resource1.player1;
 							target.Invalidate();
 						}
 						else

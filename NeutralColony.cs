@@ -60,7 +60,7 @@ namespace ANTWARS
 			IsAttacked = false;
 			_fraction = Fractions.neutral;
 			Levels = level;
-			Size = new Size(100, 100);
+			Size = new Size(70, 70);
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
 			BackColor = Color.Transparent;
