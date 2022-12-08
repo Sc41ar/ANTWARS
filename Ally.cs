@@ -12,14 +12,11 @@ namespace ANTWARS
 	internal class Ally : NeutralColony
 	{
 		int Money { get; set; }
-		int AttackSpeed { get; set; }
 		internal bool _isMouseDown = false;
-		PictureBox pictureBox = new PictureBox();
 		public Ally()
 		{
 			Population = 20;
 			PopulationGrowthSpeed = 1;
-			AttackSpeed = 20;
 			Location = new Point(10, 10);
 			PopulationLimit = 30;
 			Money = 0;
@@ -42,7 +39,6 @@ namespace ANTWARS
 		{
 			Population = population;
 			PopulationGrowthSpeed = 1;
-			AttackSpeed = 20;
 			Location = location;
 			PopulationLimit = 30;
 			Money = 0;
@@ -83,7 +79,6 @@ namespace ANTWARS
 			if (_isMouseDown)
 			{
 				var form = this.Parent;
-				pictureBox.Parent = null;
 			}
 		}
 
@@ -91,7 +86,7 @@ namespace ANTWARS
 		{
 			base.OnMouseDown(e);
 			_isMouseDown = true;
-			
+
 			Invalidate();
 		}
 		protected override void OnMouseUp(MouseEventArgs e)
@@ -111,9 +106,14 @@ namespace ANTWARS
 						currentMousePos.Y >= targetLoc.Y &&
 						currentMousePos.Y <= targetLoc.Y + target.Height)
 					{
-						Unit unit = new Unit(Location, targetLoc, Population);
-						unit.Parent = this.Parent;
-						Thread.Sleep(1500);
+						Point centre = new Point(Location.X + Width / 2
+							, Location.Y + Height / 2);
+						Point targetCentre = new Point(target.Location.X + target.Width / 2,
+							target.Location.Y + Height / 2);
+						_ = new Unit(centre, targetCentre, Population)
+						{
+							Parent = this.Parent
+						};
 						if (Population >= target.Population)
 						{
 							form.AddAllyColony(targetLoc,
@@ -144,6 +144,14 @@ namespace ANTWARS
 						currentMousePos.Y >= Location.Y &&
 						currentMousePos.Y <= Location.Y + Height))
 					{
+						Point centre = new Point(Location.X + Width / 2
+							, Location.Y + Height / 2);
+						Point targetCentre = new Point(target.Location.X + target.Width / 2,
+							target.Location.Y + Height / 2);
+						_ = new Unit(centre, targetCentre, Population)
+						{
+							Parent = this.Parent
+						};
 						target.Population = (target.Population + Population) > target.PopulationLimit ?
 							target.PopulationLimit :
 							(target.Population + Population);

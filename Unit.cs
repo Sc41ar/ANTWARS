@@ -6,11 +6,11 @@ namespace ANTWARS
 {
 	internal class Unit : Panel
 	{
-		public int Size { get; set; }
+		public int Population { get; set; }
 		public Point Destination { get; set; }
-		private Timer tiger = new Timer();
-		private int deltax;
-		private int deltay;
+		private readonly Timer tiger = new Timer();
+		private readonly int deltax;
+		private readonly int deltay;
 		private int xStep;
 		private int yStep;
 		private int tickCount;
@@ -19,7 +19,7 @@ namespace ANTWARS
 			BackColor = Color.White;
 		}
 
-		public Unit(Point startLocation, Point destination, int size)
+		public Unit(Point startLocation, Point destination, int Population)
 		{
 			Location = startLocation;
 			Destination = destination;
@@ -28,13 +28,15 @@ namespace ANTWARS
 			BackgroundImageLayout = ImageLayout.Stretch;
 			deltax = Destination.X - Location.X;
 			deltay = Destination.Y - Location.Y;
-			xStep = deltax / 75;
-			yStep = deltay / 75;
+			xStep = deltax / 100;
+			yStep = deltay / 100;
 			tiger.Interval = 20;
-			tiger.Tick += tiger_Tick;
+			tiger.Tick += Tiger_Tick;
 			tiger.Enabled = true;
 			tiger.Start();
-			Size = size;
+			Size = new Size(25, 25);
+			this.Population = Population;
+
 		}
 
 		void Step()
@@ -46,14 +48,18 @@ namespace ANTWARS
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
-
+			e.Graphics.DrawString(Population.ToString(),
+				Font,
+				Brushes.White,
+				new Point(Location.X + Width / 2,
+					Location.Y + Height / 2));
 		}
 
-		private void tiger_Tick(object sender, EventArgs e)
+		private void Tiger_Tick(object sender, EventArgs e)
 		{
 			Step();
 			tickCount++;
-			if (tickCount == 75)
+			if (tickCount == 100)
 			{
 				tiger.Stop();
 				this.Parent = null;
