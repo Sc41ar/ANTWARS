@@ -15,6 +15,7 @@ namespace ANTWARS
 	{
 		MainForm mainf;
 		public List<NeutralColony> Colonies;
+		public List<PictureBox> Images;
 		public GameForm()
 		{
 			InitializeComponent();
@@ -31,11 +32,18 @@ namespace ANTWARS
 			InitializeComponent();
 			mainf = mf;
 			Colonies = new List<NeutralColony>();
+			Images = new List<PictureBox>();
 			Colonies.Add(new Ally(new Point(75, 100), 20, Levels.first));
 			Colonies.Add(new NeutralColony(new Point(225, 300), 10, Levels.first));
 			Colonies.Add(new NeutralColony(new Point(125, 540), 10, Levels.first));
 			Colonies.Add(new NeutralColony(new Point(125, 200), 10, Levels.first));
 			Colonies.Add(new NeutralColony(new Point(225, 100), 10, Levels.first));
+			for (int i =0; i < 25; i++)
+			{
+				Images.Add(new PictureBox());
+				Images.ElementAt(i).BackColor = Color.Transparent;
+				Images.ElementAt(i).Image = Resource1.Unit;
+			}
 		}
 
 		public void AddAllyColony(Point location, int population, Levels level)
@@ -62,16 +70,6 @@ namespace ANTWARS
 				item.Show();
 				item.Update();
 			}
-		}
-
-		private void ally1_DragLeave(object sender, EventArgs e)
-		{
-
-		}
-
-		private void neutralColony1_Click(object sender, EventArgs e)
-		{
-
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)

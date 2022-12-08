@@ -14,6 +14,7 @@ namespace ANTWARS
 		int Money { get; set; }
 		int AttackSpeed { get; set; }
 		internal bool _isMouseDown = false;
+		PictureBox pictureBox = new PictureBox();
 		public Ally()
 		{
 			Population = 20;
@@ -79,33 +80,18 @@ namespace ANTWARS
 				g.DrawEllipse(new Pen(Color.MediumAquamarine, 2f),
 					new Rectangle(0, 0, Width, Height));
 			}
-			if(_isMouseDown)
+			if (_isMouseDown)
 			{
 				var form = this.Parent;
-				Panel panel = new Panel();
-				panel.BackColor = Color.BlueViolet;
-				panel.Parent = form;
-				panel.Size = form.ClientSize;
-				Thread.Sleep(155);
-				panel.Parent = null;
+				pictureBox.Parent = null;
 			}
-			//if (_isMouseDown)
-			//{
-			//	var form = this.Parent as GameForm;
-			//	if (form != null)
-			//	{
-			//		Graphics graphics = Graphics.FromHwnd(form.Handle);
-			//		graphics.DrawLines(new Pen(ForeColor, 2f), 
-			//			Location, this.PointToClient(Cursor.Position));
-			//	}
-			//}
 		}
 
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			base.OnMouseDown(e);
 			_isMouseDown = true;
-
+			
 			Invalidate();
 		}
 		protected override void OnMouseUp(MouseEventArgs e)
@@ -125,9 +111,12 @@ namespace ANTWARS
 						currentMousePos.Y >= targetLoc.Y &&
 						currentMousePos.Y <= targetLoc.Y + target.Height)
 					{
+						Unit unit = new Unit(Location, targetLoc, Population);
+						unit.Parent = this.Parent;
+						Thread.Sleep(1500);
 						if (Population >= target.Population)
 						{
-							form.AddAllyColony(targetLoc, 
+							form.AddAllyColony(targetLoc,
 								Population - target.Population, Levels.first);
 							Population = 0;
 							form.Colonies.Remove(target);
@@ -149,7 +138,11 @@ namespace ANTWARS
 					if (currentMousePos.X <= targetLoc.X + target.Width &&
 						currentMousePos.X >= targetLoc.X &&
 						currentMousePos.Y >= targetLoc.Y &&
-						currentMousePos.Y <= targetLoc.Y + target.Height)
+						currentMousePos.Y <= targetLoc.Y + target.Height &&
+						!(currentMousePos.X <= Location.X + Width &&
+						currentMousePos.X >= Location.X &&
+						currentMousePos.Y >= Location.Y &&
+						currentMousePos.Y <= Location.Y + Height))
 					{
 						target.Population = (target.Population + Population) > target.PopulationLimit ?
 							target.PopulationLimit :
