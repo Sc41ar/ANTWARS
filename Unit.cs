@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace ANTWARS
@@ -8,7 +9,7 @@ namespace ANTWARS
 	{
 		public int Population { get; set; }
 		public Point Destination { get; set; }
-		private readonly Timer tiger = new Timer();
+		private readonly System.Windows.Forms.Timer tiger = new System.Windows.Forms.Timer();
 		private readonly int deltax;
 		private readonly int deltay;
 		private int xStep;
@@ -34,9 +35,8 @@ namespace ANTWARS
 			tiger.Tick += Tiger_Tick;
 			tiger.Enabled = true;
 			tiger.Start();
-			Size = new Size(25, 25);
+			Size = new Size(30, 30);
 			this.Population = Population;
-
 		}
 
 		void Step()
@@ -50,19 +50,30 @@ namespace ANTWARS
 			base.OnPaint(e);
 			e.Graphics.DrawString(Population.ToString(),
 				Font,
-				Brushes.White,
+				new SolidBrush(Color.Crimson),
 				new Point(Location.X + Width / 2,
 					Location.Y + Height / 2));
+		}
+
+		private bool IsArrived()
+		{
+			if ((Location.X + Width / 2 >= Destination.X - deltax ||
+				Location.X + Width / 2 <= Destination.X + deltax) &&
+				(Location.Y + Height / 2 >= Destination.Y - deltay ||
+				Location.Y + Height / 2 <= Destination.Y + deltay))
+				return true;
+			return false;
 		}
 
 		private void Tiger_Tick(object sender, EventArgs e)
 		{
 			Step();
 			tickCount++;
-			if (tickCount == 100)
+			if (IsArrived())
 			{
 				tiger.Stop();
 				this.Parent = null;
+				Thread.Sleep(100);
 				Invalidate();
 			}
 		}

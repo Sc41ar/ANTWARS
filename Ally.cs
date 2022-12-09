@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Globalization;
-using System.IO;
 using System.Threading;
-using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace ANTWARS
@@ -13,6 +10,7 @@ namespace ANTWARS
 	{
 		int Money { get; set; }
 		internal bool _isMouseDown = false;
+		private bool _isArrived = false;
 		public Ally()
 		{
 			Population = 20;
@@ -89,6 +87,24 @@ namespace ANTWARS
 
 			Invalidate();
 		}
+
+		private void CreateUnit(Point targetLoc)
+		{
+			Point centre = new Point(Location.X + Width / 2
+							, Location.Y + Height / 2);
+			Point targetCentre = new Point(targetLoc.X + Width / 2,
+				targetLoc.Y + Height / 2);
+			Unit unit = new Unit(centre, targetCentre, Population)
+			{
+				Parent = this.Parent
+			};
+			while (true)
+			{
+				if (unit.Parent == null)
+					_isArrived = true;
+				break;
+			}
+		}
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			base.OnMouseUp(e);
@@ -106,14 +122,6 @@ namespace ANTWARS
 						currentMousePos.Y >= targetLoc.Y &&
 						currentMousePos.Y <= targetLoc.Y + target.Height)
 					{
-						Point centre = new Point(Location.X + Width / 2
-							, Location.Y + Height / 2);
-						Point targetCentre = new Point(target.Location.X + target.Width / 2,
-							target.Location.Y + Height / 2);
-						_ = new Unit(centre, targetCentre, Population)
-						{
-							Parent = this.Parent
-						};
 						if (Population >= target.Population)
 						{
 							form.AddAllyColony(targetLoc,
@@ -144,20 +152,17 @@ namespace ANTWARS
 						currentMousePos.Y >= Location.Y &&
 						currentMousePos.Y <= Location.Y + Height))
 					{
-						Point centre = new Point(Location.X + Width / 2
-							, Location.Y + Height / 2);
-						Point targetCentre = new Point(target.Location.X + target.Width / 2,
-							target.Location.Y + Height / 2);
-						_ = new Unit(centre, targetCentre, Population)
+						CreateUnit(targetLoc);
+						if (_isArrived)
 						{
-							Parent = this.Parent
-						};
-						target.Population = (target.Population + Population) > target.PopulationLimit ?
-							target.PopulationLimit :
-							(target.Population + Population);
-						Population = 0;
-						Invalidate();
-						target.Invalidate();
+							target.Population = (target.Population + Population) > target.PopulationLimit ?
+								target.PopulationLimit :
+								(target.Population + Population);
+							Population = 0;
+							Invalidate();
+							target.Invalidate();
+							_isArrived = false;
+						}
 					}
 
 
