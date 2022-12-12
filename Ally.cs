@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Threading;
@@ -6,11 +7,11 @@ using System.Windows.Forms;
 
 namespace ANTWARS
 {
-	internal class Ally : NeutralColony
+	public class Ally : NeutralColony
 	{
 		int Money { get; set; }
 		internal bool _isMouseDown = false;
-		private bool _isArrived = false;
+		internal bool _isArrived = false;
 		public Ally()
 		{
 			Population = 20;
@@ -88,13 +89,11 @@ namespace ANTWARS
 			Invalidate();
 		}
 
-		private void CreateUnit(Point targetLoc)
+		private void CreateUnit(NeutralColony target)
 		{
 			Point centre = new Point(Location.X + Width / 2
 							, Location.Y + Height / 2);
-			Point targetCentre = new Point(targetLoc.X + Width / 2,
-				targetLoc.Y + Height / 2);
-			Unit unit = new Unit(centre, targetCentre, Population)
+			Unit unit = new Unit(centre, Population, this, target)
 			{
 				Parent = this.Parent
 			};
@@ -122,24 +121,11 @@ namespace ANTWARS
 						currentMousePos.Y >= targetLoc.Y &&
 						currentMousePos.Y <= targetLoc.Y + target.Height)
 					{
-						if (Population >= target.Population)
-						{
-							form.AddAllyColony(targetLoc,
-								Population - target.Population, Levels.first);
-							Population = 0;
-							form.Colonies.Remove(target);
-							form.Controls.Remove(target);
-							target.Invalidate();
-						}
-						else
-						{
-							target.Population -= Population;
-							Population = 0;
-							Invalidate();
-						}
+						CreateUnit(target);
+						Population = 0;
 					}
 				}
-				if (control is Ally)
+				else if (control is Ally)
 				{
 					var target = control as NeutralColony;
 					var targetLoc = target.Location;
@@ -152,17 +138,24 @@ namespace ANTWARS
 						currentMousePos.Y >= Location.Y &&
 						currentMousePos.Y <= Location.Y + Height))
 					{
-						CreateUnit(targetLoc);
-						if (_isArrived)
-						{
-							target.Population = (target.Population + Population) > target.PopulationLimit ?
-								target.PopulationLimit :
-								(target.Population + Population);
-							Population = 0;
-							Invalidate();
-							target.Invalidate();
-							_isArrived = false;
-						}
+						CreateUnit(target);
+						Population = 0;
+						//int i = 1;
+						//while (!_isArrived)
+						//{
+						//	Debug.WriteLine(i);
+						//	i++;
+						//}
+						//if (_isArrived)
+						//{
+						//	target.Population = (target.Population + Population) > target.PopulationLimit ?
+						//		target.PopulationLimit :
+						//		(target.Population + Population);
+						//	Population = 0;
+						//	Invalidate();
+						//	target.Invalidate();
+						//	_isArrived = false;
+						//}
 					}
 
 

@@ -35,7 +35,7 @@ namespace ANTWARS
 			Images = new List<PictureBox>();
 			Colonies.Add(new Ally(new Point(75, 100), 20, Levels.first));
 			Colonies.Add(new NeutralColony(new Point(225, 300), 10, Levels.first));
-			Colonies.Add(new NeutralColony(new Point(125, 540), 10, Levels.first));
+			Colonies.Add(new NeutralColony(new Point(75, 540), 10, Levels.first));
 			Colonies.Add(new NeutralColony(new Point(125, 200), 10, Levels.first));
 			Colonies.Add(new NeutralColony(new Point(225, 100), 10, Levels.first));
 			for (int i =0; i < 25; i++)

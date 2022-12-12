@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ANTWARS", "ANTWARS.csproj", "{F6E6FF03-4D96-4309-A5B3-EA033A31C4A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ANTWARS.Tests", "..\ANTWARS.Tests\ANTWARS.Tests.csproj", "{612D1463-15F6-42AD-B72A-300C81CEDB6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F6E6FF03-4D96-4309-A5B3-EA033A31C4A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6E6FF03-4D96-4309-A5B3-EA033A31C4A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6E6FF03-4D96-4309-A5B3-EA033A31C4A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{612D1463-15F6-42AD-B72A-300C81CEDB6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{612D1463-15F6-42AD-B72A-300C81CEDB6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{612D1463-15F6-42AD-B72A-300C81CEDB6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{612D1463-15F6-42AD-B72A-300C81CEDB6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
