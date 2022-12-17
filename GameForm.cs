@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ANTWARS
 {
-	public partial class GameForm : Form
+	internal partial class GameForm : Form
 	{
 		MainForm mainf;
 		public List<NeutralColony> Colonies;
@@ -34,10 +34,10 @@ namespace ANTWARS
 			Colonies = new List<NeutralColony>();
 			Images = new List<PictureBox>();
 			Colonies.Add(new Ally(new Point(75, 100), 20, Levels.first));
-			Colonies.Add(new NeutralColony(new Point(225, 300), 10, Levels.first));
-			Colonies.Add(new NeutralColony(new Point(75, 540), 10, Levels.first));
-			Colonies.Add(new NeutralColony(new Point(125, 200), 10, Levels.first));
-			Colonies.Add(new NeutralColony(new Point(225, 100), 10, Levels.first));
+			Colonies.Add(new NeutralColony(new Point(225, 300), 10, Levels.neutral));
+			Colonies.Add(new NeutralColony(new Point(75, 540), 10, Levels.neutral));
+			Colonies.Add(new NeutralColony(new Point(125, 200), 10, Levels.neutral));
+			Colonies.Add(new NeutralColony(new Point(225, 100), 10, Levels.neutral));
 			for (int i =0; i < 25; i++)
 			{
 				Images.Add(new PictureBox());

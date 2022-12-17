@@ -2,14 +2,16 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
 
 namespace ANTWARS
 {
-	public class Ally : NeutralColony
+	internal class Ally : NeutralColony
 	{
-		int Money { get; set; }
+		public int Money { get; set; }
 		internal bool _isMouseDown = false;
 		internal bool _isArrived = false;
 		public Ally()
@@ -20,7 +22,7 @@ namespace ANTWARS
 			PopulationLimit = 30;
 			Money = 0;
 			Fraction = Fractions.player;
-			Levels = Levels.first;
+			Level = Levels.first;
 			Size = new Size(150, 100);
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
@@ -42,8 +44,8 @@ namespace ANTWARS
 			PopulationLimit = 30;
 			Money = 0;
 			Fraction = Fractions.player;
-			Levels = level;
-			Size = new Size(70, 70);
+			Level = level;
+			Size = new Size(80, 80);
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
 			DoubleBuffered = true;
@@ -55,9 +57,19 @@ namespace ANTWARS
 			_format.LineAlignment = StringAlignment.Center;
 		}
 
+		protected override void OnLevelChanged(LevelEventArgs e)
+		{
+			base.OnLevelChanged(e);
+			
+			string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName +
+				@"\Resources\" + Fraction.ToString() + ((int)Level).ToString() + ".png";
+			Debug.WriteLine(path);
+			BackgroundImage = Bitmap.FromFile(path);
+		}
+
 		void Upgrade()
 		{
-			Levels = (Levels)((int)Levels + 1);
+			Level = (Levels)((int)Level + 1);
 		}
 
 		protected override void OnPaint(PaintEventArgs e)

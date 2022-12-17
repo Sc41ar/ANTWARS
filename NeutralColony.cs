@@ -5,7 +5,8 @@ using System.Windows.Forms;
 
 namespace ANTWARS
 {
-	public class NeutralColony : Control
+	delegate void LevelEventHandler(object sender, LevelEventArgs e);
+	internal class NeutralColony : Control
 	{
 		protected StringFormat _format = new StringFormat();
 		protected bool _isMouseEntered = false;
@@ -25,11 +26,26 @@ namespace ANTWARS
 			}
 		}
 
+		protected event LevelEventHandler LevelChanged;
+
 		public bool IsAttacked { get; set; }
 
 
 		public int PopulationLimit { get; set; }
-		public Levels Levels { get; set; }
+		private Levels level;
+		public Levels Level
+		{
+			get { return level; }
+			set
+			{
+				Levels oldLevel = level;
+				level = value;
+				if (oldLevel != level)
+				{
+					OnLevelChanged(new LevelEventArgs(oldLevel, level));
+				}
+			}
+		}
 
 		public NeutralColony()
 		{
@@ -38,7 +54,7 @@ namespace ANTWARS
 			PopulationLimit = 20;
 			IsAttacked = false;
 			_fraction = Fractions.neutral;
-			Levels = Levels.first;
+			Level = Levels.neutral;
 			Size = new Size(100, 100);
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
@@ -59,8 +75,8 @@ namespace ANTWARS
 			PopulationLimit = 20;
 			IsAttacked = false;
 			_fraction = Fractions.neutral;
-			Levels = level;
-			Size = new Size(70, 70);
+			Level = level;
+			Size = new Size(75, 75);
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
 			BackColor = Color.Transparent;
@@ -71,6 +87,12 @@ namespace ANTWARS
 
 			Text = Population.ToString() + "/" + PopulationLimit.ToString();
 		}
+
+		protected virtual void OnLevelChanged(LevelEventArgs e)
+		{
+			if (LevelChanged != null) LevelChanged(this, e);
+		}
+
 		public void PopulationGrowth()
 		{
 			if (Population < PopulationLimit)
@@ -98,7 +120,7 @@ namespace ANTWARS
 			base.OnMouseEnter(e);
 			_isMouseEntered = true;
 			Invalidate();
-			
+
 		}
 
 		protected override void OnMouseLeave(EventArgs e)
@@ -111,7 +133,7 @@ namespace ANTWARS
 		protected override void OnMouseHover(EventArgs e)
 		{
 			base.OnMouseHover(e);
-			
+
 		}
 	}
 }

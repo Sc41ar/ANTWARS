@@ -8,7 +8,8 @@ namespace ANTWARS
 {
 	public enum Levels
 	{
-		first = 1,
+		neutral,
+		first,
 		second,
 		third,
 		fourth

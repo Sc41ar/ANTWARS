@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace ANTWARS
 {
-	public class Unit : Panel
+	internal class Unit : Panel
 	{
 		public int Population { get; set; }
 		public Point Destination { get; set; }
@@ -26,15 +26,15 @@ namespace ANTWARS
 		public Unit(Point startLocation, int Population, Ally attacker, NeutralColony target)
 		{
 			Location = startLocation;
-			Destination = target.Location;/*new Point(target.Location.X + Width / 2,
-				target.Location.Y + Height / 2);*/
+			Destination = /*target.Location;*/ new Point(target.Location.X + target.Width / 2,
+				target.Location.Y + target.Height / 2);
 			BackColor = Color.Transparent;
 			BackgroundImage = Resource1.Unit;
 			BackgroundImageLayout = ImageLayout.Stretch;
 			deltax = Destination.X - Location.X;
 			deltay = Destination.Y - Location.Y;
-			xStep = deltax / 120;
-			yStep = deltay / 120;
+			xStep = deltax / 60;
+			yStep = deltay / 60;
 			Debug.WriteLine("x {0}, y {1}, xs {2}, xy {3}", deltax, deltay, xStep, yStep);
 			tiger.Interval = 20;
 			tiger.Tick += Tiger_Tick;
@@ -86,9 +86,10 @@ namespace ANTWARS
 				target.IsAttacked = true;
 				if (Population >= target.Population)
 				{
-					form.AddAllyColony(Destination, Population - target.Population, Levels.first);
+					form.AddAllyColony(target.Location, Population - target.Population, Levels.first);
 					form.Colonies.Remove(target);
 					form.Controls.Remove(target);
+					attacker.Money += ((int)target.Level+1) * 10;
 					target.Update();
 				}
 				else

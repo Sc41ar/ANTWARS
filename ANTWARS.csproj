@@ -53,6 +53,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="AllyBase.cs" />
+    <Compile Include="LevelEventArgs.cs" />
     <Compile Include="Unit.cs">
       <SubType>Component</SubType>
     </Compile>
