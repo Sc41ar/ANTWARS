@@ -108,7 +108,7 @@ namespace ANTWARS
 
 			g.DrawString(Text, Font, new SolidBrush(Color.Crimson),
 				Width / 2, Height / 2, _format);
-			if (_isMouseEntered)
+			if (_isMouseEntered && !(this is Ally))
 			{
 				g.DrawEllipse(new Pen(Color.MediumAquamarine, 2f),
 					new Rectangle(0, 0, Width, Height));

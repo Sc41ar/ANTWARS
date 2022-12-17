@@ -55,7 +55,7 @@ namespace ANTWARS
 
 		private void GameForm_Deactivate(object sender, EventArgs e)
 		{
-			mainf.Show();
+			//mainf.Show();
 			//mainf.Close();
 		}
 

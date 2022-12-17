@@ -35,7 +35,6 @@ namespace ANTWARS
 			deltay = Destination.Y - Location.Y;
 			xStep = deltax / 60;
 			yStep = deltay / 60;
-			Debug.WriteLine("x {0}, y {1}, xs {2}, xy {3}", deltax, deltay, xStep, yStep);
 			tiger.Interval = 20;
 			tiger.Tick += Tiger_Tick;
 			tiger.Enabled = true;
@@ -89,7 +88,7 @@ namespace ANTWARS
 					form.AddAllyColony(target.Location, Population - target.Population, Levels.first);
 					form.Colonies.Remove(target);
 					form.Controls.Remove(target);
-					attacker.Money += ((int)target.Level+1) * 10;
+					attacker.Money += ((int)target.Level+1) * 40;
 					target.Update();
 				}
 				else
@@ -133,8 +132,6 @@ namespace ANTWARS
 				deltay = Destination.Y - Location.Y;
 				xStep = deltax / (120 - tickCount);
 				yStep = deltay / (120 - tickCount);
-				Debug.WriteLine("new x {0}, y {1}, xs {2}, xy {3} \n{4}\n{5}",
-					deltax, deltay, xStep, yStep, Destination.ToString(), Location.ToString());
 
 			}
 		}
