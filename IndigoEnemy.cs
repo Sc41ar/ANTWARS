@@ -10,43 +10,42 @@ using System.Windows.Forms;
 
 namespace ANTWARS
 {
-	internal class RedEnemy : Enemy
+	internal class IndigoEnemy : Enemy
 	{
-
-		public RedEnemy()
+		public IndigoEnemy()
 		{
 			timeToUpgrade = 7;
 			Population = 0;
 			PopulationLimit = 18;
 			Level = (Levels)1;
-			PopulationGrowthSpeed = 1;
-			Fraction = Fractions.redEnemy;
+			PopulationGrowthSpeed = 3;
+			Fraction = Fractions.indigoEnemy;
 		}
 
-		public RedEnemy(Point location, int population, Levels level)
+		public IndigoEnemy(Point location, int population, Levels level)
 		{
 			Level = level;
 			Size = new Size(75, 75);
-			Fraction = Fractions.redEnemy;
+			Fraction = Fractions.indigoEnemy;
 			Text = Population + "/" + PopulationLimit;
 			timer.Tick += Timer_Tick;
 			timer.Interval = 1000;
 			timer.Start();
-			timeToUpgrade = 25;
-			PopulationLimit = 25;
+			timeToUpgrade = 20;
+			PopulationLimit = 30;
 			string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName +
 				@"\Resources\" + Fraction.ToString() + ((int)Level).ToString() + ".png";
 			BackgroundImage = Bitmap.FromFile(path);
 			Population = population % (PopulationLimit + 1);
 			Location = location;
-			PopulationGrowthSpeed = 2;
+			PopulationGrowthSpeed = 3;
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
 			Graphics g = e.Graphics;
-			g.DrawString(Text, Font, new SolidBrush(Color.LightGray),
+			g.DrawString(Text, Font, new SolidBrush(Color.Gray),
 				Width / 2, 2 * Height / 5, _format);
 			if (_isMouseEntered)
 			{

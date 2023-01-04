@@ -58,6 +58,9 @@
     <Compile Include="Enemy.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="IndigoEnemy.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="LevelEventArgs.cs" />
     <Compile Include="OliveEnemy.cs">
       <SubType>Component</SubType>
