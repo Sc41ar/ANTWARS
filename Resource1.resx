@@ -118,8 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="blueEnemy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\blueEnemy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="blueEnemy1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\blueEnemy1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="blueEnemy2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\blueEnemy2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -130,8 +130,8 @@
   <data name="hmADm_mDdpTr3SYiT6a4YYSZUKa_wfeJ_UukU_55StHj3RthXKAQVX3ujTV5s3qOhS3n8pkFzeAa6WLPtphhERIh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\hmADm_mDdpTr3SYiT6a4YYSZUKa_wfeJ_UukU-55StHj3RthXKAQVX3ujTV5s3qOhS3n8pkFzeAa6WLPtphhERIh.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="indigoEnemy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\indigoEnemy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="indigoEnemy1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\indigoEnemy1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="indigoEnemy2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\indigoEnemy2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -142,11 +142,11 @@
   <data name="indigoEnemy4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\indigoEnemy4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Neutral" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Neutral.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="neutral1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\neutral1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="oliveEnemy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\oliveEnemy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="oliveEnemy1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\oliveenemy1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="oliveEnemy2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\oliveEnemy2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -166,8 +166,8 @@
   <data name="player3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\player3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="redEnemy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\redEnemy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="redEnemy1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\redEnemy1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="redEnemy2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\redEnemy2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,8 +178,8 @@
   <data name="redEnemy4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\redEnemy4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tanEnemy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\tanEnemy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tanEnemy1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tanEnemy1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tanEnemy2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\tanEnemy2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

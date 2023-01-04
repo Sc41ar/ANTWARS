@@ -37,8 +37,10 @@ namespace ANTWARS
 			Colonies.Add(new NeutralColony(new Point(225, 300), 10, Levels.neutral));
 			Colonies.Add(new NeutralColony(new Point(75, 540), 10, Levels.neutral));
 			Colonies.Add(new NeutralColony(new Point(125, 200), 10, Levels.neutral));
+
 			Colonies.Add(new NeutralColony(new Point(225, 100), 10, Levels.neutral));
-			for (int i =0; i < 25; i++)
+			Colonies.Add(new OliveEnemy(new Point(456, 100), 15, Levels.first));
+			for (int i = 0; i < 25; i++)
 			{
 				Images.Add(new PictureBox());
 				Images.ElementAt(i).BackColor = Color.Transparent;
@@ -48,7 +50,7 @@ namespace ANTWARS
 
 		public void AddAllyColony(Point location, int population, Levels level)
 		{
-			
+
 			Colonies.Add(new Ally(location, population, Levels.first));
 			Update();
 		}
@@ -74,14 +76,20 @@ namespace ANTWARS
 
 		private void timer1_Tick(object sender, EventArgs e)
 		{
-			var Allies = 
+			var Allies =
 				from t in Colonies
 				where t is Ally
 				select t;
+			var enemies = from t in Colonies
+							  where t is Enemy
+							  select t;
+			foreach (var enemy in enemies)
+			{
+				enemy.PopulationGrowth();
+			}
 			foreach (var item in Allies)
 			{
-					item.PopulationGrowth();
-					item.Invalidate();
+				item.PopulationGrowth();
 			}
 		}
 	}

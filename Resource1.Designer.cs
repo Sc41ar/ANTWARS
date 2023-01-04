@@ -63,9 +63,9 @@ namespace ANTWARS {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap blueEnemy {
+        internal static System.Drawing.Bitmap blueEnemy1 {
             get {
-                object obj = ResourceManager.GetObject("blueEnemy", resourceCulture);
+                object obj = ResourceManager.GetObject("blueEnemy1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -104,9 +104,9 @@ namespace ANTWARS {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap indigoEnemy {
+        internal static System.Drawing.Bitmap indigoEnemy1 {
             get {
-                object obj = ResourceManager.GetObject("indigoEnemy", resourceCulture);
+                object obj = ResourceManager.GetObject("indigoEnemy1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -144,9 +144,9 @@ namespace ANTWARS {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Neutral {
+        internal static System.Drawing.Bitmap neutral1 {
             get {
-                object obj = ResourceManager.GetObject("Neutral", resourceCulture);
+                object obj = ResourceManager.GetObject("neutral1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -154,9 +154,9 @@ namespace ANTWARS {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap oliveEnemy {
+        internal static System.Drawing.Bitmap oliveEnemy1 {
             get {
-                object obj = ResourceManager.GetObject("oliveEnemy", resourceCulture);
+                object obj = ResourceManager.GetObject("oliveEnemy1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -224,9 +224,9 @@ namespace ANTWARS {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap redEnemy {
+        internal static System.Drawing.Bitmap redEnemy1 {
             get {
-                object obj = ResourceManager.GetObject("redEnemy", resourceCulture);
+                object obj = ResourceManager.GetObject("redEnemy1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -264,9 +264,9 @@ namespace ANTWARS {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tanEnemy {
+        internal static System.Drawing.Bitmap tanEnemy1 {
             get {
-                object obj = ResourceManager.GetObject("tanEnemy", resourceCulture);
+                object obj = ResourceManager.GetObject("tanEnemy1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

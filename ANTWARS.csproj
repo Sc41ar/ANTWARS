@@ -52,9 +52,18 @@
     <Compile Include="Ally.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="AllyBase.cs" />
-    <Compile Include="Enemy.cs" />
+    <Compile Include="Enemy.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="LevelEventArgs.cs" />
+    <Compile Include="OliveEnemy.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
     <Compile Include="Unit.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -77,11 +86,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource1.resx</DependentUpon>
-    </Compile>
     <Compile Include="UpgradeMenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +110,7 @@
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UpgradeMenuForm.resx">
       <DependentUpon>UpgradeMenuForm.cs</DependentUpon>
@@ -134,7 +139,7 @@
     <None Include="Resources\indigoEnemy4.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\oliveEnemy.png" />
+    <None Include="Resources\oliveEnemy1.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\oliveEnemy2.png" />
@@ -198,6 +203,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Unit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\indigoEnemy1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blueEnemy1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tanEnemy1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redEnemy1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\neutral1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

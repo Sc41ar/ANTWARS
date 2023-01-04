@@ -10,6 +10,9 @@ namespace ANTWARS
 {
 	internal abstract class Enemy : NeutralColony
 	{
+		protected Timer timer = new Timer();
+		protected int tickCount;
+		protected int timeToUpgrade;//in seconds
 		public Enemy()
 		{
 			Size = new Size(75, 75);
@@ -25,13 +28,29 @@ namespace ANTWARS
 			PopulationLimit = populationLimit;
 			Size = new Size(75, 75);
 			Text = Population + "/" + PopulationLimit;
+		}
 
+		protected internal virtual void Upgrade()
+		{
+			int nextLevel = (int)Level + 1;
+			Level = (Levels)nextLevel;
+			PopulationGrowthSpeed += nextLevel;
+			PopulationLimit += nextLevel * 10;
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			base.OnPaint(e);	
+			base.OnPaint(e);
 
+		}
+
+		protected override void OnMouseEnter(EventArgs e)
+		{
+			base.OnMouseEnter(e);
+		}
+		protected override void OnMouseLeave(EventArgs e)
+		{
+			base.OnMouseLeave(e);
 		}
 	}
 }

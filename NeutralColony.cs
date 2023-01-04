@@ -59,7 +59,7 @@ namespace ANTWARS
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
 			BackColor = Color.Transparent;
-			BackgroundImage = Resource1.Neutral;
+			BackgroundImage = Resource1.neutral1;
 			BackgroundImageLayout = ImageLayout.Stretch;
 			_format.Alignment = StringAlignment.Center;
 			_format.LineAlignment = StringAlignment.Center;
@@ -80,7 +80,7 @@ namespace ANTWARS
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
 			BackColor = Color.Transparent;
-			BackgroundImage = Resource1.Neutral;
+			BackgroundImage = Resource1.neutral1;
 			BackgroundImageLayout = ImageLayout.Stretch;
 			_format.Alignment = StringAlignment.Center;
 			_format.LineAlignment = StringAlignment.Center;
@@ -93,11 +93,12 @@ namespace ANTWARS
 			if (LevelChanged != null) LevelChanged(this, e);
 		}
 
-		public void PopulationGrowth()
+		public virtual void PopulationGrowth()
 		{
 			if (Population < PopulationLimit)
 				Population += PopulationGrowthSpeed;
 			Text = Population.ToString() + "/" + PopulationLimit.ToString();
+			Invalidate();
 		}
 		protected override void OnPaint(PaintEventArgs e)
 		{
@@ -108,7 +109,7 @@ namespace ANTWARS
 
 			g.DrawString(Text, Font, new SolidBrush(Color.Crimson),
 				Width / 2, Height / 2, _format);
-			if (_isMouseEntered && !(this is Ally))
+			if (_isMouseEntered && !(this is Ally) && !(this is Enemy))
 			{
 				g.DrawEllipse(new Pen(Color.MediumAquamarine, 2f),
 					new Rectangle(0, 0, Width, Height));

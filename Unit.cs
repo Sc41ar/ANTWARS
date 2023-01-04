@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace ANTWARS
@@ -10,7 +9,7 @@ namespace ANTWARS
 	{
 		public int Population { get; set; }
 		public Point Destination { get; set; }
-		private readonly System.Windows.Forms.Timer tiger = new System.Windows.Forms.Timer();
+		private readonly Timer tiger = new Timer();
 		private int deltax;
 		private int deltay;
 		private int xStep;
