@@ -96,7 +96,13 @@ namespace ANTWARS
 		public virtual void PopulationGrowth()
 		{
 			if (Population < PopulationLimit)
+			{
 				Population += PopulationGrowthSpeed;
+				if (Population > PopulationLimit)
+				{
+					Population = PopulationLimit;
+				}
+			}
 			Text = Population.ToString() + "/" + PopulationLimit.ToString();
 			Invalidate();
 		}
@@ -107,8 +113,8 @@ namespace ANTWARS
 			Text = Population.ToString() + "/" + PopulationLimit.ToString();
 			g.SmoothingMode = SmoothingMode.HighQuality;
 
-			g.DrawString(Text, Font, new SolidBrush(Color.Crimson),
-				Width / 2, Height / 2, _format);
+			g.DrawString(Text, Font, new SolidBrush(Color.DarkSlateGray),
+				Width / 2, 2 * Height / 5, _format);
 			if (_isMouseEntered && !(this is Ally) && !(this is Enemy))
 			{
 				g.DrawEllipse(new Pen(Color.MediumAquamarine, 2f),

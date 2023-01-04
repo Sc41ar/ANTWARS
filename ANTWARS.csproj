@@ -52,6 +52,9 @@
     <Compile Include="Ally.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="BlueEnemy.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Enemy.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -63,6 +66,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RedEnemy.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Unit.cs">
       <SubType>Component</SubType>

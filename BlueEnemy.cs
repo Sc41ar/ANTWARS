@@ -6,43 +6,42 @@ using System.Windows.Forms;
 
 namespace ANTWARS
 {
-	internal class OliveEnemy : Enemy
+	internal class BlueEnemy : Enemy
 	{
-		public OliveEnemy()
+		public BlueEnemy()
 		{
-			timeToUpgrade = 10;
-			Population = 10;
-			PopulationLimit = 15;
-			Level = Level;
+			timeToUpgrade = 7;
+			Population = 0;
+			PopulationLimit = 18;
+			Level = (Levels)1;
 			PopulationGrowthSpeed = 1;
-			Fraction = Fractions.oliveEnemy;
+			Fraction = Fractions.blueEnemy;
 		}
 
-		public OliveEnemy(Point location, int population, Levels level)
+		public BlueEnemy(Point location, int population, Levels level)
 		{
 			Level = level;
 			Size = new Size(75, 75);
-			Fraction = Fractions.oliveEnemy;
+			Fraction = Fractions.blueEnemy;
 			Text = Population + "/" + PopulationLimit;
 			timer.Tick += Timer_Tick;
 			timer.Interval = 1000;
 			timer.Start();
-			timeToUpgrade = 29;
-			PopulationLimit = 15;
+			timeToUpgrade = 7;
+			PopulationLimit = 18;
 			string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName +
 				@"\Resources\" + Fraction.ToString() + ((int)Level).ToString() + ".png";
 			BackgroundImage = Bitmap.FromFile(path);
 			Population = population % (PopulationLimit + 1);
 			Location = location;
 			PopulationGrowthSpeed = 1;
-			Fraction = Fractions.oliveEnemy;
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
 			Graphics g = e.Graphics;
-			g.DrawString(Text, Font, new SolidBrush(Color.Black),
+			g.DrawString(Text, Font, new SolidBrush(Color.Crimson),
 				Width / 2, 2 * Height / 5, _format);
 			if (_isMouseEntered)
 			{
@@ -81,7 +80,7 @@ namespace ANTWARS
 			int nextLevel = (int)Level + 1;
 			Level = (Levels)nextLevel;
 			PopulationGrowthSpeed += nextLevel / 3;
-			PopulationLimit += nextLevel * 7;
+			PopulationLimit += nextLevel * 8;
 			Invalidate();
 		}
 
@@ -110,7 +109,7 @@ namespace ANTWARS
 		protected void Timer_Tick(object sender, EventArgs e)
 		{
 			tickCount++;
-			if (tickCount % (timeToUpgrade) == 0 && (int)Level < 3)//1sec / timer.Interval = 50)
+			if (tickCount % (timeToUpgrade) == 0 && (int)Level < 3)//1sec / timer.Interval
 			{
 				Upgrade();
 			}

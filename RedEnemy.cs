@@ -1,41 +1,45 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ANTWARS
 {
-	internal class OliveEnemy : Enemy
+	internal class RedEnemy : Enemy
 	{
-		public OliveEnemy()
+
+		public RedEnemy()
 		{
-			timeToUpgrade = 10;
-			Population = 10;
-			PopulationLimit = 15;
-			Level = Level;
+			timeToUpgrade = 7;
+			Population = 0;
+			PopulationLimit = 18;
+			Level = (Levels)1;
 			PopulationGrowthSpeed = 1;
-			Fraction = Fractions.oliveEnemy;
+			Fraction = Fractions.redEnemy;
 		}
 
-		public OliveEnemy(Point location, int population, Levels level)
+		public RedEnemy(Point location, int population, Levels level)
 		{
 			Level = level;
 			Size = new Size(75, 75);
-			Fraction = Fractions.oliveEnemy;
+			Fraction = Fractions.redEnemy;
 			Text = Population + "/" + PopulationLimit;
 			timer.Tick += Timer_Tick;
 			timer.Interval = 1000;
 			timer.Start();
-			timeToUpgrade = 29;
-			PopulationLimit = 15;
+			timeToUpgrade = 25;
+			PopulationLimit = 25;
 			string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName +
 				@"\Resources\" + Fraction.ToString() + ((int)Level).ToString() + ".png";
 			BackgroundImage = Bitmap.FromFile(path);
 			Population = population % (PopulationLimit + 1);
 			Location = location;
-			PopulationGrowthSpeed = 1;
-			Fraction = Fractions.oliveEnemy;
+			PopulationGrowthSpeed = 2;
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
@@ -80,8 +84,8 @@ namespace ANTWARS
 		{
 			int nextLevel = (int)Level + 1;
 			Level = (Levels)nextLevel;
-			PopulationGrowthSpeed += nextLevel / 3;
-			PopulationLimit += nextLevel * 7;
+			PopulationGrowthSpeed += nextLevel / 2;
+			PopulationLimit += nextLevel * 10;
 			Invalidate();
 		}
 
@@ -110,7 +114,7 @@ namespace ANTWARS
 		protected void Timer_Tick(object sender, EventArgs e)
 		{
 			tickCount++;
-			if (tickCount % (timeToUpgrade) == 0 && (int)Level < 3)//1sec / timer.Interval = 50)
+			if (tickCount % (timeToUpgrade) == 0 && (int)Level < 4)//1sec / timer.Interval
 			{
 				Upgrade();
 			}

@@ -42,7 +42,7 @@ namespace ANTWARS
 			Money = 0;
 			Fraction = Fractions.player;
 			Level = level;
-			Size = new Size(80, 80);
+			Size = new Size(75, 75);
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
 			DoubleBuffered = true;
