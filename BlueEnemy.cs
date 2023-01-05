@@ -2,12 +2,14 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ANTWARS
 {
 	internal class BlueEnemy : Enemy
 	{
+		private int timeToAttack;
 		public BlueEnemy()
 		{
 			timeToUpgrade = 7;
@@ -20,6 +22,10 @@ namespace ANTWARS
 
 		public BlueEnemy(Point location, int population, Levels level)
 		{
+			int seed = (int)DateTime.Now.Ticks;
+			Random rnd = new Random(seed);
+			timeToAttack = rnd.Next(20) + 7;
+			Debug.WriteLine("Время до синего нападения: " + timeToAttack);
 			Level = level;
 			Size = new Size(75, 75);
 			Fraction = Fractions.blueEnemy;
@@ -67,8 +73,50 @@ namespace ANTWARS
 							g.DrawRectangle(pen, new Rectangle(new Point(0, 0), new Size(Width - 1, Height - 1)));
 						}
 						break;
+						var gf = this.Parent as GameForm;
+						if (gf.Colonies.Contains(this))
+						{
 
+							Debug.WriteLine("У ВАС 2 ЧИЧА");
+						}
+						else
+						{
+							Dispose();
+						}
 				}
+			}
+		}
+
+		internal void Attack()
+		{
+			var gf = this.Parent as GameForm;
+			if (gf != null)
+			{
+				var targets = from item in gf.Colonies
+								  where !(item is Enemy)
+								  select item;
+				var runs = 0;
+				int seed = (int)DateTime.Now.Ticks;
+				var rnd = new Random(seed);
+				var target = rnd.Next(targets.Count()) + 1;
+				foreach (var e in targets)
+				{
+					runs++;
+					if (runs == target)
+					{
+						Point centre = new Point(Location.X + Width / 2
+								, Location.Y + Height / 2);
+						_ = new Unit(centre, Population, this, e)
+						{
+							Parent = this.Parent
+						};
+						Population = 0;
+					}
+				}
+			}
+			else
+			{
+				Dispose();
 			}
 		}
 

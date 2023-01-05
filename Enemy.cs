@@ -53,15 +53,5 @@ namespace ANTWARS
 		{
 			base.OnMouseLeave(e);
 		}
-
-		public new void Dispose()
-		{
-			timer.Stop();
-			this.Parent = null;
-			Dispose(true);
-			Debug.WriteLine("Disposed");
-			GC.SuppressFinalize(this);
-
-		}
 	}
 }

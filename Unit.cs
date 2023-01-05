@@ -70,7 +70,7 @@ namespace ANTWARS
 			this.Population = Population;
 			this.attacker = attacker;
 			this.target = target;
-			if(target._isAttacked)
+			if (target._isAttacked)
 			{
 				Dispose();
 			}
@@ -111,15 +111,14 @@ namespace ANTWARS
 		void TargetAction()
 		{
 			var form = this.Parent as GameForm;
-			Point currentMousePos = target.Location;
-			//if (attacker is Ally)
-			//{
-			//	currentMousePos = form.PointToClient(Cursor.Position);
-			//}
-			//else
-			//{
-			//	currentMousePos = target.Location;
-			//}
+			if(form == null)
+			{
+
+				Dispose();
+				return;
+			}
+			Point currentMousePos = new Point(target.Location.X + target.Width / 2,
+				target.Location.Y + target.Height / 2);
 			if (!(target is Ally))
 			{
 				Debug.WriteLine("target type: " + target.GetType().Name);
@@ -141,10 +140,8 @@ namespace ANTWARS
 					form.Controls.Remove(target);
 					Debug.WriteLine(form.Controls.Contains(target));
 					Debug.WriteLine(target == null);
-					var chicha = target as Enemy;
-					chicha.Dispose();
+					target.Dispose();
 					target = null;
-					chicha = null;
 					GC.Collect();
 					GC.WaitForPendingFinalizers();
 					Dispose();
@@ -152,6 +149,7 @@ namespace ANTWARS
 				else
 				{
 					target.Population -= Population;
+					target.Invalidate();
 					target._isAttacked = false;
 					Dispose();
 				}
@@ -166,7 +164,7 @@ namespace ANTWARS
 					target.Population = (target.Population + Population) > target.PopulationLimit ?
 								target.PopulationLimit :
 								(target.Population + Population);
-					
+
 					target.Invalidate();
 					this.Dispose();
 				}
@@ -174,14 +172,24 @@ namespace ANTWARS
 				{
 					if (Population >= target.Population)
 					{
-						form.AddOliveEnemy(Location, Population - target.Population, Levels.first);
+						form.AddOliveEnemy(target.Location, Population - target.Population, Levels.first);
 						form.Colonies.Remove(target);
+						Debug.WriteLine(form.Colonies.Contains(target));
 						form.Controls.Remove(target);
-						target.Update();
+						Debug.WriteLine(form.Controls.Contains(target));
+						Debug.WriteLine(target == null);
+						target.Dispose();
+						target = null;
+						GC.Collect();
+						GC.WaitForPendingFinalizers();
+						Dispose();
 					}
 					else
 					{
 						target.Population -= Population;
+						target.Invalidate();
+						target._isAttacked = false;
+						Dispose();
 					}
 				}
 			}
@@ -197,13 +205,9 @@ namespace ANTWARS
 			tickCount++;
 			if (IsArrived(Location))
 			{
-				TargetAction();
 				tiger.Stop();
-				//GameForm gf = this.Parent as GameForm;
-				//gf.Images.Remove(this);
-				this.Parent = null;
-				Dispose();
-				Invalidate();
+				TargetAction();
+				
 			}
 			if (tickCount % 5 == 1)
 			{

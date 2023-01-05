@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -169,6 +170,15 @@ namespace ANTWARS
 			base.OnMouseLeave(e);
 			_isMouseEntered = false;
 			Invalidate();
+		}
+
+		public new void Dispose()
+		{
+			this.Parent = null;
+			Dispose(true);
+			Debug.WriteLine("Disposed");
+			GC.SuppressFinalize(this);
+
 		}
 	}
 }

@@ -24,12 +24,7 @@ namespace ANTWARS
 		{
 			int seed = (int)DateTime.Now.Ticks;
 			Random rnd = new Random(seed);
-			//var avg = 0f;
-			//for(int i = 0; i < population; i++)
-			//{
-			//	avg += rnd.Next(50)+1;
-			//}
-			timeToAttack = rnd.Next(20) + 7; /*(int)Math.Round(avg/population);*/
+			timeToAttack = rnd.Next(20) + 7;
 			Debug.WriteLine("Время до нападения: " + timeToAttack);
 			Level = level;
 			Size = new Size(75, 75);
