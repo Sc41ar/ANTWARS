@@ -141,9 +141,10 @@ namespace ANTWARS
 					form.Controls.Remove(target);
 					Debug.WriteLine(form.Controls.Contains(target));
 					Debug.WriteLine(target == null);
-					target.Dispose();
+					var chicha = target as Enemy;
+					chicha.Dispose();
 					target = null;
-
+					chicha = null;
 					GC.Collect();
 					GC.WaitForPendingFinalizers();
 					Dispose();
