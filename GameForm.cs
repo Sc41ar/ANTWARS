@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -21,7 +22,8 @@ namespace ANTWARS
 		/// список всех колоний
 		/// </summary>
 		public List<NeutralColony> Colonies;
-		
+		private int ticks = 0;
+
 		public GameForm()
 		{
 			InitializeComponent();
@@ -53,7 +55,7 @@ namespace ANTWARS
 			//Colonies.Add(new BlueEnemy(new Point(456, 100), 14, Levels.first));
 			//Colonies.Add(new RedEnemy(new Point(581, 100), 20, Levels.first));
 			//Colonies.Add(new IndigoEnemy(new Point(706, 100), 25, Levels.first));
-			
+
 		}
 
 		public void AddAllyColony(Point location, int population, Levels level)
@@ -62,8 +64,8 @@ namespace ANTWARS
 			Colonies.Add(new Ally(location, population, Levels.first));
 			Update();
 		}
-		
-		public void  AddOliveEnemy(Point location, int population, Levels level)
+
+		public void AddOliveEnemy(Point location, int population, Levels level)
 		{
 			Colonies.Add(new OliveEnemy(location, population, Levels.first));
 			Update();
@@ -111,6 +113,8 @@ namespace ANTWARS
 			{
 				item.PopulationGrowth();
 			}
+			ticks++;
+			Debug.WriteLine(ticks);
 		}
 	}
 }

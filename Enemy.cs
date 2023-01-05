@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace ANTWARS
 {
@@ -51,6 +52,16 @@ namespace ANTWARS
 		protected override void OnMouseLeave(EventArgs e)
 		{
 			base.OnMouseLeave(e);
+		}
+
+		public new void Dispose()
+		{
+			timer.Stop();
+			this.Parent = null;
+			Dispose(true);
+			Debug.WriteLine("Disposed");
+			GC.SuppressFinalize(this);
+
 		}
 	}
 }

@@ -47,6 +47,7 @@ namespace ANTWARS
 			Location = location;
 			PopulationGrowthSpeed = 1;
 			Fraction = Fractions.oliveEnemy;
+			_isAttacked = false;
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
@@ -82,6 +83,17 @@ namespace ANTWARS
 
 				}
 			}
+
+			var gf = this.Parent as GameForm;
+			if (gf.Colonies.Contains(this))
+			{
+
+				Debug.WriteLine("У ВАС ЧИЧА");
+			}
+			else
+			{
+				Dispose();
+			}
 		}
 
 		internal void Attack()
@@ -89,27 +101,35 @@ namespace ANTWARS
 			try
 			{
 				var gf = this.Parent as GameForm;
-				var targets = from item in gf.Colonies
-								  where !(item is OliveEnemy)
-								  select item;
-				var runs = 0;
-				int seed = (int)DateTime.Now.Ticks;
-				var rnd = new Random(seed);
-				var target = rnd.Next(targets.Count()) + 1;
-				foreach (var e in targets)
+				if (gf != null)
 				{
-					runs++;
-					if (runs == target)
+					var targets = from item in gf.Colonies
+									  where !(item is OliveEnemy)
+									  select item;
+					var runs = 0;
+					int seed = (int)DateTime.Now.Ticks;
+					var rnd = new Random(seed);
+					var target = rnd.Next(targets.Count()) + 1;
+					foreach (var e in targets)
 					{
-						Point centre = new Point(Location.X + Width / 2
-								, Location.Y + Height / 2);
-						_ = new Unit(centre, Population, this, e)
+						runs++;
+						if (runs == target)
 						{
-							Parent = this.Parent
-						};
-						Population = 0;
+							Point centre = new Point(Location.X + Width / 2
+									, Location.Y + Height / 2);
+							_ = new Unit(centre, Population, this, e)
+							{
+								Parent = this.Parent
+							};
+							Population = 0;
+						}
 					}
 				}
+				else
+				{
+					Dispose();
+				}
+
 			}
 			catch (Exception ex)
 			{

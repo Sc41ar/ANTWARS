@@ -111,17 +111,18 @@ namespace ANTWARS
 		void TargetAction()
 		{
 			var form = this.Parent as GameForm;
-			Point currentMousePos;
-			if (attacker is Ally)
-			{
-				currentMousePos = form.PointToClient(Cursor.Position);
-			}
-			else
-			{
-				currentMousePos = target.Location;
-			}
+			Point currentMousePos = target.Location;
+			//if (attacker is Ally)
+			//{
+			//	currentMousePos = form.PointToClient(Cursor.Position);
+			//}
+			//else
+			//{
+			//	currentMousePos = target.Location;
+			//}
 			if (!(target is Ally))
 			{
+				Debug.WriteLine("target type: " + target.GetType().Name);
 				if (Population >= target.Population)
 				{
 
@@ -133,20 +134,28 @@ namespace ANTWARS
 					}
 					else
 					{
-						Debug.WriteLine(target.Location.ToString());
 						form.AddOliveEnemy(target.Location, Population - target.Population, Levels.first);
 					}
 					form.Colonies.Remove(target);
+					Debug.WriteLine(form.Colonies.Contains(target));
 					form.Controls.Remove(target);
-					target.Update();
+					Debug.WriteLine(form.Controls.Contains(target));
+					Debug.WriteLine(target == null);
+					target.Dispose();
+					target = null;
+
+					GC.Collect();
+					GC.WaitForPendingFinalizers();
 					Dispose();
 				}
 				else
 				{
 					target.Population -= Population;
+					target._isAttacked = false;
+					Dispose();
 				}
 			}
-			else if (target is Ally || target._isAttacked)
+			else if (target is Ally)
 			{
 				if (!(currentMousePos.X <= Location.X + Width &&
 						currentMousePos.X >= Location.X &&
@@ -185,8 +194,6 @@ namespace ANTWARS
 			}
 			Step();
 			tickCount++;
-			if (target._isAttacked)
-				Dispose(true);
 			if (IsArrived(Location))
 			{
 				TargetAction();
