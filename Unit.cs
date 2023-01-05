@@ -15,7 +15,7 @@ namespace ANTWARS
 		private int xStep;
 		private int yStep;
 		private int tickCount;
-		private Ally attacker;
+		private NeutralColony attacker;
 		private NeutralColony target;
 		Unit()
 		{
@@ -42,6 +42,39 @@ namespace ANTWARS
 			this.Population = Population;
 			this.attacker = attacker;
 			this.target = target;
+			if (target._isAttacked)
+			{
+				Debug.WriteLine("У ВАС ЧИЧА");
+				Dispose();
+			}
+			target._isAttacked = true;
+		}
+
+		public Unit(Point startLocation, int Population, Enemy attacker, NeutralColony target)
+		{
+			Location = startLocation;
+			Destination = /*target.Location;*/ new Point(target.Location.X + target.Width / 2,
+				target.Location.Y + target.Height / 2);
+			BackColor = Color.Transparent;
+			BackgroundImage = Resource1.Unit;
+			BackgroundImageLayout = ImageLayout.Stretch;
+			deltax = Destination.X - Location.X;
+			deltay = Destination.Y - Location.Y;
+			xStep = deltax / 60;
+			yStep = deltay / 60;
+			tiger.Interval = 20;
+			tiger.Tick += Tiger_Tick;
+			tiger.Enabled = true;
+			tiger.Start();
+			Size = new Size(30, 30);
+			this.Population = Population;
+			this.attacker = attacker;
+			this.target = target;
+			if(target._isAttacked)
+			{
+				Dispose();
+			}
+			target._isAttacked = true;
 		}
 
 		void Step()
@@ -69,7 +102,7 @@ namespace ANTWARS
 				(current.Y >= Destination.Y - 5 &&
 				current.Y <= Destination.Y + 5))
 			{
-				attacker._isArrived = true;
+				//attacker._isArrived = true;
 				return true;
 			}
 			return false;
@@ -78,51 +111,90 @@ namespace ANTWARS
 		void TargetAction()
 		{
 			var form = this.Parent as GameForm;
-			var currentMousePos = form.PointToClient(Cursor.Position);
+			Point currentMousePos;
+			if (attacker is Ally)
+			{
+				currentMousePos = form.PointToClient(Cursor.Position);
+			}
+			else
+			{
+				currentMousePos = target.Location;
+			}
 			if (!(target is Ally))
 			{
-				target.IsAttacked = true;
 				if (Population >= target.Population)
 				{
-					form.AddAllyColony(target.Location, Population - target.Population, Levels.first);
+
+					if (attacker is Ally)
+					{
+						form.AddAllyColony(target.Location, Population - target.Population, Levels.first);
+						Ally ally = (Ally)attacker;
+						ally.Money += ((int)target.Level + 1) * 40;
+					}
+					else
+					{
+						Debug.WriteLine(target.Location.ToString());
+						form.AddOliveEnemy(target.Location, Population - target.Population, Levels.first);
+					}
 					form.Colonies.Remove(target);
 					form.Controls.Remove(target);
-					attacker.Money += ((int)target.Level+1) * 40;
 					target.Update();
+					Dispose();
 				}
 				else
 				{
 					target.Population -= Population;
 				}
 			}
-			else if (target is Ally || target.IsAttacked)
+			else if (target is Ally || target._isAttacked)
 			{
 				if (!(currentMousePos.X <= Location.X + Width &&
 						currentMousePos.X >= Location.X &&
 						currentMousePos.Y >= Location.Y &&
-						currentMousePos.Y <= Location.Y + Height))
+						currentMousePos.Y <= Location.Y + Height) && attacker is Ally)
 				{
 					target.Population = (target.Population + Population) > target.PopulationLimit ?
 								target.PopulationLimit :
 								(target.Population + Population);
-					this.Dispose();
-					target.IsAttacked = true;
+					
 					target.Invalidate();
+					this.Dispose();
+				}
+				else
+				{
+					if (Population >= target.Population)
+					{
+						form.AddOliveEnemy(Location, Population - target.Population, Levels.first);
+						form.Colonies.Remove(target);
+						form.Controls.Remove(target);
+						target.Update();
+					}
+					else
+					{
+						target.Population -= Population;
+					}
 				}
 			}
 		}
 
 		private void Tiger_Tick(object sender, EventArgs e)
 		{
+			if (target.Parent == null || target == null)
+			{
+				Dispose();
+			}
 			Step();
 			tickCount++;
-			if (target.IsAttacked)
-				this.Dispose(false);
+			if (target._isAttacked)
+				Dispose(true);
 			if (IsArrived(Location))
 			{
 				TargetAction();
 				tiger.Stop();
+				//GameForm gf = this.Parent as GameForm;
+				//gf.Images.Remove(this);
 				this.Parent = null;
+				Dispose();
 				Invalidate();
 			}
 			if (tickCount % 5 == 1)

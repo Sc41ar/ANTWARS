@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ANTWARS
 {
+	/// <summary>
+	/// класс для создания аргумента событий 
+	/// </summary>
 	internal class LevelEventArgs : EventArgs
 	{
 		private Levels oldLevel;

@@ -13,10 +13,15 @@ namespace ANTWARS
 {
 	internal partial class GameForm : Form
 	{
+		/// <summary>
+		/// ссылка на основную форму для возвращения к ней
+		/// </summary>
 		MainForm mainf;
+		/// <summary>
+		/// список всех колоний
+		/// </summary>
 		public List<NeutralColony> Colonies;
-		public List<PictureBox> Images;
-		private int _ticks;
+		
 		public GameForm()
 		{
 			InitializeComponent();
@@ -33,28 +38,34 @@ namespace ANTWARS
 			InitializeComponent();
 			mainf = mf;
 			Colonies = new List<NeutralColony>();
-			Images = new List<PictureBox>();
 			Colonies.Add(new Ally(new Point(75, 100), 20, Levels.first));
 			Colonies.Add(new NeutralColony(new Point(225, 300), 10, Levels.neutral));
 			Colonies.Add(new NeutralColony(new Point(75, 540), 10, Levels.neutral));
 			Colonies.Add(new NeutralColony(new Point(125, 200), 10, Levels.neutral));
 			Colonies.Add(new NeutralColony(new Point(225, 100), 10, Levels.neutral));
 			Colonies.Add(new OliveEnemy(new Point(331, 100), 14, Levels.first));
-			Colonies.Add(new BlueEnemy(new Point(456, 100), 14, Levels.first));
-			Colonies.Add(new RedEnemy(new Point(581, 100), 20, Levels.first));
-			Colonies.Add(new IndigoEnemy(new Point(706, 100), 25, Levels.first));
-			for (int i = 0; i < 25; i++)
-			{
-				Images.Add(new PictureBox());
-				Images.ElementAt(i).BackColor = Color.Transparent;
-				Images.ElementAt(i).Image = Resource1.Unit;
-			}
+			//Colonies.Add(new OliveEnemy(new Point(331, 350), 14, Levels.first));
+			//Colonies.Add(new OliveEnemy(new Point(331, 200), 14, Levels.first));
+			Colonies.Add(new NeutralColony(new Point(456, 100), 10, Levels.neutral));
+			Colonies.Add(new NeutralColony(new Point(581, 100), 10, Levels.neutral));
+			Colonies.Add(new NeutralColony(new Point(706, 100), 10, Levels.neutral));
+
+			//Colonies.Add(new BlueEnemy(new Point(456, 100), 14, Levels.first));
+			//Colonies.Add(new RedEnemy(new Point(581, 100), 20, Levels.first));
+			//Colonies.Add(new IndigoEnemy(new Point(706, 100), 25, Levels.first));
+			
 		}
 
 		public void AddAllyColony(Point location, int population, Levels level)
 		{
 
 			Colonies.Add(new Ally(location, population, Levels.first));
+			Update();
+		}
+		
+		public void  AddOliveEnemy(Point location, int population, Levels level)
+		{
+			Colonies.Add(new OliveEnemy(location, population, Levels.first));
 			Update();
 		}
 
@@ -81,12 +92,10 @@ namespace ANTWARS
 		{
 			base.OnPaint(e);
 			Graphics g = e.Graphics;
-			g.DrawString(_ticks.ToString(), Font, new SolidBrush(Color.DarkOrange), new Point(Width - 100, 30));
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)
 		{
-			_ticks++;
 			var Allies =
 				from t in Colonies
 				where t is Ally
@@ -102,7 +111,6 @@ namespace ANTWARS
 			{
 				item.PopulationGrowth();
 			}
-			Invalidate();
 		}
 	}
 }

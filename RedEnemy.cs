@@ -55,15 +55,13 @@ namespace ANTWARS
 				{
 					case 1:
 						{
-							Debug.WriteLine("ellipse");
 							g.DrawEllipse(pen,
 								new Rectangle(0, 0, Width, Height));
 						}
 						break;
 					case 2:
 						{
-							Debug.WriteLine("Triangle");
-							g.DrawPolygon(pen, new Point[]{
+								g.DrawPolygon(pen, new Point[]{
 								new Point(0, Height-1),
 								new Point(Width / 2, 0),
 								new Point(Width, Height-1)});
@@ -71,7 +69,6 @@ namespace ANTWARS
 						break;
 					case 3:
 						{
-							Debug.WriteLine("Square");
 							g.DrawRectangle(pen, new Rectangle(new Point(0, 0), new Size(Width - 1, Height - 1)));
 						}
 						break;

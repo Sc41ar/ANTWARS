@@ -10,7 +10,6 @@ namespace ANTWARS
 	{
 		public int Money { get; set; }
 		internal bool _isMouseDown = false;
-		internal bool _isArrived = false;
 		internal bool _isRightButton = false;
 		public Ally()
 		{
@@ -88,14 +87,12 @@ namespace ANTWARS
 				{
 					case 1:
 						{
-							Debug.WriteLine("ellipse");
 							g.DrawEllipse(pen,
 								new Rectangle(0, 0, Width, Height));
 						}
 						break;
 					case 2:
 						{
-							Debug.WriteLine("Triangle");
 							g.DrawPolygon(pen, new Point[]{
 								new Point(0, Height-1),
 								new Point(Width / 2, 0),
@@ -104,7 +101,6 @@ namespace ANTWARS
 						break;
 					case 3:
 						{
-							Debug.WriteLine("Square");
 							g.DrawRectangle(pen, new Rectangle(new Point(0, 0), new Size(Width - 1, Height - 1)));
 						}
 						break;
@@ -142,15 +138,20 @@ namespace ANTWARS
 		{
 			Point centre = new Point(Location.X + Width / 2
 							, Location.Y + Height / 2);
-			Unit unit = new Unit(centre, Population, this, target)
+			if (target._isAttacked)
+				return;
+			try
 			{
-				Parent = this.Parent
-			};
-			while (true)
+
+				_ = new Unit(centre, Population, this, target)
+				{
+					Parent = this.Parent
+				};
+				Population = 0;
+			}
+			catch
 			{
-				if (unit.Parent == null)
-					_isArrived = true;
-				break;
+				Debug.WriteLine("У ВАС ЧИЧА");
 			}
 		}
 		protected override void OnMouseUp(MouseEventArgs e)
@@ -173,7 +174,7 @@ namespace ANTWARS
 							currentMousePos.Y <= targetLoc.Y + target.Height)
 						{
 							CreateUnit(target);
-							Population = 0;
+							
 						}
 					}
 					else if (control is Ally)
@@ -190,7 +191,6 @@ namespace ANTWARS
 							currentMousePos.Y <= Location.Y + Height))
 						{
 							CreateUnit(target);
-							Population = 0;
 
 						}
 					}

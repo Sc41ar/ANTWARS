@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ANTWARS
 {
+	/// <summary>
+	/// отдельный уровень для нейтральной колонии потому,
+	///  что у нее спрайт отдельный и в ходе игры она свой уровень не повышает
+	/// </summary>
 	public enum Levels
 	{
 		neutral,
