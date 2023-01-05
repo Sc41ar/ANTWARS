@@ -22,6 +22,9 @@ namespace ANTWARS
 		/// список всех колоний
 		/// </summary>
 		public List<NeutralColony> Colonies;
+		/// <summary>
+		/// если не забыл добавить/удалить нужен для дебага
+		/// </summary>
 		private int ticks = 0;
 
 		public GameForm()
@@ -34,7 +37,10 @@ namespace ANTWARS
 		{
 			throw new NotImplementedException();
 		}
-
+		/// <summary>
+		/// задаем прикольчик, массив малышей
+		/// </summary>
+		/// <param name="mf"></param>
 		public GameForm(MainForm mf)
 		{
 			InitializeComponent();
@@ -57,7 +63,12 @@ namespace ANTWARS
 			//Colonies.Add(new IndigoEnemy(new Point(706, 100), 25, Levels.first));
 
 		}
-
+		/// <summary>
+		/// мне казалось что это удобно, те перь не уверен
+		/// </summary>
+		/// <param name="location"></param>
+		/// <param name="population"></param>
+		/// <param name="level"></param>
 		public void AddAllyColony(Point location, int population, Levels level)
 		{
 
@@ -70,19 +81,29 @@ namespace ANTWARS
 			Colonies.Add(new OliveEnemy(location, population, Levels.first));
 			Update();
 		}
-
+		/// <summary>
+		/// думал будет вызывать, когда закрывается, а он вызывает даже, если свернуть
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void GameForm_Deactivate(object sender, EventArgs e)
 		{
 			//mainf.Show();
 			//mainf.Close();
 		}
-
+		/// <summary>
+		/// как онпайнт
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		internal void GameForm_Paint(object sender, PaintEventArgs e)
 		{
+			//мерцает без этого, и вообще кайф имеется
 			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor
 				| ControlStyles.UserPaint, true);
 			foreach (var item in Colonies)
 			{
+				//из одного списочка в другой рисуем
 				Controls.Add(item);
 				item.Parent = this;
 				item.Show();
@@ -93,11 +114,15 @@ namespace ANTWARS
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
+			//я здесь делал секундомер, может еще верну)
 			Graphics g = e.Graphics;
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)
 		{
+			//магичество LINQ
+			//понравился мне
+			//метод увеличивает население малышей
 			var Allies =
 				from t in Colonies
 				where t is Ally

@@ -35,6 +35,7 @@ namespace ANTWARS
 			timer.Start();
 			timeToUpgrade = 29;
 			PopulationLimit = 15;
+			//надо же с нулевой сжелдать спрайт
 			string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName +
 				@"\Resources\" + Fraction.ToString() + ((int)Level).ToString() + ".png";
 			BackgroundImage = Bitmap.FromFile(path);
@@ -44,7 +45,10 @@ namespace ANTWARS
 			Fraction = Fractions.oliveEnemy;
 			_isAttacked = false;
 		}
-
+		/// <summary>
+		/// рисунки
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
@@ -78,7 +82,7 @@ namespace ANTWARS
 
 				}
 			}
-
+			//ну просто для себя обезопаситься
 			var gf = this.Parent as GameForm;
 			if (gf.Colonies.Contains(this))
 			{
@@ -90,7 +94,11 @@ namespace ANTWARS
 				Dispose();
 			}
 		}
-
+		/// <summary>
+		/// атака, тут все должно быть понятно.
+		/// Если не понятно, объясню.
+		/// раз в N секунд выбираем случайного малыша не нашего типа и шлем туда войско
+		/// </summary>
 		internal void Attack()
 		{
 			try
@@ -132,7 +140,10 @@ namespace ANTWARS
 				Debug.WriteLine("У ВАС ЧИЧА");
 			}
 		}
-
+		/// <summary>
+		/// вот и перегрузочка апгрейда
+		/// .К слову, они от времени зависят
+		/// </summary>
 		protected internal override void Upgrade()
 		{
 			int nextLevel = (int)Level + 1;
@@ -141,7 +152,10 @@ namespace ANTWARS
 			PopulationLimit += nextLevel * 7;
 			Invalidate();
 		}
-
+		/// <summary>
+		/// и даже смены уровня
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnLevelChanged(LevelEventArgs e)
 		{
 			base.OnLevelChanged(e);
@@ -151,7 +165,10 @@ namespace ANTWARS
 			BackgroundImage = Bitmap.FromFile(path);
 			Invalidate();
 		}
-
+		/// <summary>
+		/// ну проходили же все это уже
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseEnter(EventArgs e)
 		{
 			base.OnMouseEnter(e);
@@ -167,7 +184,7 @@ namespace ANTWARS
 		protected void Timer_Tick(object sender, EventArgs e)
 		{
 			tickCount++;
-			if (tickCount % (timeToUpgrade) == 0 && (int)Level < 3)//1sec / timer.Interval = 50)
+			if (tickCount % (timeToUpgrade) == 0 && (int)Level < 3)
 			{
 				Upgrade();
 			}

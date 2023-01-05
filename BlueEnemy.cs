@@ -73,16 +73,17 @@ namespace ANTWARS
 							g.DrawRectangle(pen, new Rectangle(new Point(0, 0), new Size(Width - 1, Height - 1)));
 						}
 						break;
-						var gf = this.Parent as GameForm;
-						if (gf.Colonies.Contains(this))
-						{
+						
+				}
+				var gf = this.Parent as GameForm;
+				if (gf.Colonies.Contains(this))
+				{
 
-							Debug.WriteLine("У ВАС 2 ЧИЧА");
-						}
-						else
-						{
-							Dispose();
-						}
+					Debug.WriteLine("У ВАС 2 ЧИЧА");
+				}
+				else
+				{
+					Dispose();
 				}
 			}
 		}

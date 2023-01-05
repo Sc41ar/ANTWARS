@@ -111,7 +111,7 @@ namespace ANTWARS
 		void TargetAction()
 		{
 			var form = this.Parent as GameForm;
-			if(form == null)
+			if (form == null)
 			{
 
 				Dispose();
@@ -207,7 +207,7 @@ namespace ANTWARS
 			{
 				tiger.Stop();
 				TargetAction();
-				
+
 			}
 			if (tickCount % 5 == 1)
 			{

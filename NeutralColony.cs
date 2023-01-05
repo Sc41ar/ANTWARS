@@ -171,12 +171,18 @@ namespace ANTWARS
 			_isMouseEntered = false;
 			Invalidate();
 		}
+		/// <summary>
+		/// метод уничтожения,
+		/// деструкторов то нет, 
+		/// уборщик мусора непонятно когда приедет, он умный очень
+		/// а так я себе еще в дебаг напишу, что убил
+		/// </summary>
 
 		public new void Dispose()
 		{
 			this.Parent = null;
 			Dispose(true);
-			Debug.WriteLine("Disposed");
+			Debug.WriteLine("Disposed" + this.GetType().Name);
 			GC.SuppressFinalize(this);
 
 		}

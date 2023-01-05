@@ -8,9 +8,21 @@ namespace ANTWARS
 {
 	internal class Ally : NeutralColony
 	{
+		/// <summary>
+		/// грязные зеленые бумажки
+		/// </summary>
 		public int Money { get; set; }
+		/// <summary>
+		/// флажок опущенной кнопки мыши
+		/// </summary>
 		internal bool _isMouseDown = false;
+		/// <summary>
+		/// флажок правой кнопки мыщи, для улучшений
+		/// </summary>
 		internal bool _isRightButton = false;
+	/// <summary>
+	/// тут даже написано что 0 ссылок, пусть будет 
+	/// </summary>
 		public Ally()
 		{
 			Population = 20;
@@ -31,6 +43,16 @@ namespace ANTWARS
 			_format.Alignment = StringAlignment.Center;
 			_format.LineAlignment = StringAlignment.Center;
 		}
+		/// <summary>
+		/// Что нас интересует для создания колонии : ее расположение, популяция, урове
+		/// </summary>
+		/// <param name="location"></param>
+		/// <param name="population"></param>
+		/// <param name="level">
+		/// при захвате то всегда первый,
+		/// но в планах на какие-то уровни садить уже высокого уровня противников
+		/// , мб и союзников)
+		/// </param>
 
 		public Ally(Point location, int population, Levels level)
 		{
@@ -49,38 +71,52 @@ namespace ANTWARS
 			ForeColor = Color.BlueViolet;
 			BackgroundImage = Resource1.player1;
 			BackgroundImageLayout = ImageLayout.Stretch;
+			//не уверен, что это форматирование влияет
 			_format.Alignment = StringAlignment.Center;
 			_format.LineAlignment = StringAlignment.Center;
 		}
-
+		/// <summary>
+		/// событие, точнее его перегрузка
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnLevelChanged(LevelEventArgs e)
-		{
+		{ 
+			//база.
 			base.OnLevelChanged(e);
-
+			//изменение характеристик происходит в другом методе,
+			//здесь же меняем спрайт таким хитрым способом;)
 			string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName +
 				@"\Resources\" + Fraction.ToString() + ((int)Level).ToString() + ".png";
-			BackgroundImage = Bitmap.FromFile(path);
+			BackgroundImage = Bitmap.FromFile(path); // ну и меняем собсна
 		}
-
+		/// <summary>
+		/// улучшение
+		/// </summary>
 		internal void Upgrade()
 		{
+			//удобно создать переменную для рассчета коэффициентов
+			//(я их беру с потолка)
 			int nextLevel = ((int)Level + 1);
+			//вроде справедливо
 			Money -= nextLevel * 20;
-			Level = (Levels)nextLevel;
+			Level = (Levels)nextLevel; // тут событие как раз таки kicks in
 			PopulationGrowthSpeed += nextLevel;
-			PopulationLimit += nextLevel * 10;
+			PopulationLimit += nextLevel * 10;//не ну а че
 		}
-
+		/// <summary>
+		/// очередная перегрузка метода отрисовки, что тут еще объяснять
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			base.OnPaint(e);
-			Graphics g = e.Graphics;
-			Text = Population.ToString() + "/" + PopulationLimit.ToString();
+			base.OnPaint(e);//база.
+			Graphics g = e.Graphics; // для удобства использования графического контекста
+			Text = Population.ToString() + "/" + PopulationLimit.ToString(); // это популяция
 			var cursorPos = this.PointToClient(Cursor.Position);
 			g.SmoothingMode = SmoothingMode.HighQuality;
 			g.DrawString(Money.ToString(), Font, new SolidBrush(Color.Crimson),
-				Width / 2, 3 * Height / 4, _format);
-			if (_isMouseEntered)
+				Width / 2, 3 * Height / 4, _format);//это деньги
+			if (_isMouseEntered)//обработочка обводки, в зависимости от уровня, кстати треугольник кривой
 			{
 				var pen = new Pen(Color.MediumAquamarine, 2f);
 				switch ((int)Level)
@@ -107,14 +143,14 @@ namespace ANTWARS
 
 				}
 			}
-			if (_isRightButton)
+			if (_isRightButton) // а это точно надо?
 			{
 				var form = this.Parent;
 
 			}
 
 		}
-
+		//вызов формочки для апгрейда
 		protected override void OnMouseClick(MouseEventArgs e)
 		{
 			base.OnMouseClick(e);
@@ -122,10 +158,13 @@ namespace ANTWARS
 			{
 				UpgradeMenuForm umf = new UpgradeMenuForm(this);
 				umf.Show();
-				umf.Location = PointToClient(Cursor.Position);
+				umf.Location = Cursor.Position;
 			}
 		}
-
+		/// <summary>
+		/// НУЖНЫ только чтобы флажки поменять
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 
@@ -133,27 +172,43 @@ namespace ANTWARS
 			_isMouseDown = true;
 			Invalidate();
 		}
-
+		/// <summary>
+		/// создается юнит и происходит атака
+		/// </summary>
+		/// <param name="target"></param>
 		private void CreateUnit(NeutralColony target)
 		{
+			//чтобы он красиво вырывался из центра
 			Point centre = new Point(Location.X + Width / 2
 							, Location.Y + Height / 2);
 			if (target._isAttacked)
 				return;
 			try
 			{
-
-				_ = new Unit(centre, Population, this, target)
+				//выбрасывает иногда исключение disposed object
+				//все потому что я так намудрил в том классе,
+				//что лучше в него не смотреть никогда,
+				//
+				//
+				//
+				//даже под страхом смерти
+				_ = new Unit(centre, Population, this, target) //черточка вот эта имба
 				{
 					Parent = this.Parent
 				};
-				Population = 0;
+				Population = 0;//обнуляемся
 			}
 			catch
 			{
-				Debug.WriteLine("У ВАС ЧИЧА");
+				//ловим ошибочки
+				Debug.WriteLine("У ВАС СМЕРТЬ!!!!!!!!!!!!!!!!!!!!!!!!!");
 			}
 		}
+		/// <summary>
+		/// проверяем что у нас в карманах, где мышка и прочее
+		/// .флажок убираем еще
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			base.OnMouseUp(e);
@@ -162,6 +217,7 @@ namespace ANTWARS
 			{
 				var form = this.Parent as GameForm;
 				var currentMousePos = form.PointToClient(Cursor.Position);
+				//не смог ничего придумать изящнее и лучше(
 				foreach (Control control in form.Controls)
 				{
 					if (control is NeutralColony && !(control is Ally))
@@ -198,7 +254,7 @@ namespace ANTWARS
 
 				}
 			}
-			Invalidate();
+			Invalidate();//инвалид
 		}
 	}
 }
