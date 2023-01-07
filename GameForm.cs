@@ -17,7 +17,7 @@ namespace ANTWARS
 		/// <summary>
 		/// ссылка на основную форму для возвращения к ней
 		/// </summary>
-		MainForm mainf;
+		readonly MainForm mainf;
 		/// <summary>
 		/// список всех колоний
 		/// </summary>
@@ -55,12 +55,12 @@ namespace ANTWARS
 			//Colonies.Add(new OliveEnemy(new Point(331, 350), 14, Levels.first));
 			//Colonies.Add(new OliveEnemy(new Point(331, 200), 14, Levels.first));
 			//Colonies.Add(new NeutralColony(new Point(456, 100), 10, Levels.neutral));
-			Colonies.Add(new NeutralColony(new Point(581, 100), 10, Levels.neutral));
-			Colonies.Add(new NeutralColony(new Point(706, 100), 10, Levels.neutral));
+			//Colonies.Add(new NeutralColony(new Point(581, 100), 10, Levels.neutral));
+			//Colonies.Add(new NeutralColony(new Point(706, 100), 10, Levels.neutral));
 
 			Colonies.Add(new BlueEnemy(new Point(456, 100), 14, Levels.first));
-			//Colonies.Add(new RedEnemy(new Point(581, 100), 20, Levels.first));
-			//Colonies.Add(new IndigoEnemy(new Point(706, 100), 25, Levels.first));
+			Colonies.Add(new RedEnemy(new Point(581, 100), 20, Levels.first));
+			Colonies.Add(new IndigoEnemy(new Point(706, 100), 25, Levels.first));
 
 		}
 		/// <summary>
@@ -81,6 +81,19 @@ namespace ANTWARS
 			Colonies.Add(new OliveEnemy(location, population, Levels.first));
 			Update();
 		}
+
+		public void AddBlueEnemy(Point location, int population, Levels level)
+		{
+			Colonies.Add(new BlueEnemy(location, population, Levels.first));
+			Update();
+		}
+
+		public void AddRedEnemy(Point location, int population, Levels level)
+		{
+			Colonies.Add(new RedEnemy(location, population, Levels.first));
+			Update();
+		}
+
 		/// <summary>
 		/// думал будет вызывать, когда закрывается, а он вызывает даже, если свернуть
 		/// </summary>
@@ -139,7 +152,6 @@ namespace ANTWARS
 				item.PopulationGrowth();
 			}
 			ticks++;
-			Debug.WriteLine(ticks);
 		}
 	}
 }

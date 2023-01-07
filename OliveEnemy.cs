@@ -86,8 +86,6 @@ namespace ANTWARS
 			var gf = this.Parent as GameForm;
 			if (gf.Colonies.Contains(this))
 			{
-
-				Debug.WriteLine("У ВАС ЧИЧА");
 			}
 			else
 			{
@@ -137,7 +135,6 @@ namespace ANTWARS
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex.ToString());
-				Debug.WriteLine("У ВАС ЧИЧА");
 			}
 		}
 		/// <summary>

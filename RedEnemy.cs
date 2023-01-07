@@ -13,6 +13,8 @@ namespace ANTWARS
 	internal class RedEnemy : Enemy
 	{
 
+		private int timeToAttack;
+
 		public RedEnemy()
 		{
 			timeToUpgrade = 7;
@@ -25,6 +27,11 @@ namespace ANTWARS
 
 		public RedEnemy(Point location, int population, Levels level)
 		{
+
+			int seed = (int)DateTime.Now.Ticks;
+			Random rnd = new Random(seed);
+			timeToAttack = rnd.Next(15) + 7;
+			Debug.WriteLine("Время до Красного нападения: " + timeToAttack);
 			Level = level;
 			Size = new Size(75, 75);
 			Fraction = Fractions.redEnemy;
@@ -61,7 +68,7 @@ namespace ANTWARS
 						break;
 					case 2:
 						{
-								g.DrawPolygon(pen, new Point[]{
+							g.DrawPolygon(pen, new Point[]{
 								new Point(0, Height-1),
 								new Point(Width / 2, 0),
 								new Point(Width, Height-1)});
@@ -84,6 +91,46 @@ namespace ANTWARS
 			PopulationGrowthSpeed += nextLevel / 2;
 			PopulationLimit += nextLevel * 10;
 			Invalidate();
+		}
+
+		public void Attack()
+		{
+			var gf = this.Parent as GameForm;
+			if (gf != null)
+			{
+				var targets = from item in gf.Colonies
+								  where !(item is RedEnemy)
+								  select item;
+				var runs = 0;
+				var seed = (int)DateTime.Now.Ticks;
+				var rnd = new Random(seed);
+				var target = rnd.Next(targets.Count());
+				foreach (var e in targets)
+				{
+					runs++;
+					if (runs == target && e.Population < Population)
+					{
+						Point centre = new Point(Location.X + Width / 2
+							, Location.Y + Height / 2);
+						try
+						{
+							var unit = new Unit(Location, Population, this, e);
+							unit.Parent = this.Parent;
+							unit.Invalidate();
+						}
+						catch (Exception ex)
+						{
+							Debug.WriteLine(ex);
+						}
+						Population = 0;
+						Invalidate();
+					}
+				}
+			}
+			else
+			{
+				Dispose();
+			}
 		}
 
 		protected override void OnLevelChanged(LevelEventArgs e)
@@ -114,6 +161,10 @@ namespace ANTWARS
 			if (tickCount % (timeToUpgrade) == 0 && (int)Level < 4)//1sec / timer.Interval
 			{
 				Upgrade();
+			}
+			if (tickCount % timeToAttack == 0)
+			{
+				Attack();
 			}
 		}
 	}

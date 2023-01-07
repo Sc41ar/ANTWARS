@@ -24,7 +24,7 @@ namespace ANTWARS
 		{
 			int seed = (int)DateTime.Now.Ticks;
 			Random rnd = new Random(seed);
-			timeToAttack = rnd.Next(20) + 7;
+			timeToAttack = rnd.Next(15) + 7;
 			Debug.WriteLine("Время до синего нападения: " + timeToAttack);
 			Level = level;
 			Size = new Size(75, 75);
@@ -78,8 +78,6 @@ namespace ANTWARS
 				var gf = this.Parent as GameForm;
 				if (gf.Colonies.Contains(this))
 				{
-
-					Debug.WriteLine("У ВАС 2 ЧИЧА");
 				}
 				else
 				{
@@ -96,10 +94,11 @@ namespace ANTWARS
 				var targets = from item in gf.Colonies
 								  where !(item is Enemy)
 								  select item;
+				Debug.WriteLine("Количиствео таргетов "+targets.Count<NeutralColony>().ToString());
 				var runs = 0;
 				int seed = (int)DateTime.Now.Ticks;
 				var rnd = new Random(seed);
-				var target = rnd.Next(targets.Count()) + 1;
+				var target = rnd.Next(targets.Count());
 				foreach (var e in targets)
 				{
 					runs++;
@@ -107,10 +106,18 @@ namespace ANTWARS
 					{
 						Point centre = new Point(Location.X + Width / 2
 								, Location.Y + Height / 2);
-						_ = new Unit(centre, Population, this, e)
+						try
 						{
-							Parent = this.Parent
-						};
+
+							_ = new Unit(centre, Population, this, e)
+							{
+								Parent = this.Parent
+							};
+						}
+						catch(Exception ex)
+						{
+							Debug.WriteLine(ex);
+						}
 						Population = 0;
 					}
 				}
@@ -158,6 +165,11 @@ namespace ANTWARS
 			if (tickCount % (timeToUpgrade) == 0 && (int)Level < 3)//1sec / timer.Interval
 			{
 				Upgrade();
+			}
+			 
+			if(tickCount % timeToAttack == 0)
+			{
+				Attack();
 			}
 		}
 	}

@@ -182,7 +182,7 @@ namespace ANTWARS
 		{
 			this.Parent = null;
 			Dispose(true);
-			Debug.WriteLine("Disposed" + this.GetType().Name);
+			Debug.WriteLine("Disposed " + this.GetType().Name);
 			GC.SuppressFinalize(this);
 
 		}

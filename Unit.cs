@@ -44,7 +44,6 @@ namespace ANTWARS
 			this.target = target;
 			if (target._isAttacked)
 			{
-				Debug.WriteLine("У ВАС ЧИЧА");
 				Dispose();
 			}
 			target._isAttacked = true;
@@ -73,6 +72,7 @@ namespace ANTWARS
 			if (target._isAttacked)
 			{
 				Dispose();
+
 			}
 			target._isAttacked = true;
 		}
@@ -103,6 +103,7 @@ namespace ANTWARS
 				current.Y <= Destination.Y + 5))
 			{
 				//attacker._isArrived = true;
+				Debug.WriteLine("arrived");
 				return true;
 			}
 			return false;
@@ -131,9 +132,17 @@ namespace ANTWARS
 						Ally ally = (Ally)attacker;
 						ally.Money += ((int)target.Level + 1) * 40;
 					}
-					else
+					else if (attacker is OliveEnemy)
 					{
 						form.AddOliveEnemy(target.Location, Population - target.Population, Levels.first);
+					}
+					else if (attacker is BlueEnemy)
+					{
+						form.AddBlueEnemy(target.Location, Population - target.Population - 1, Levels.first);
+					}
+					else if(attacker is RedEnemy)
+					{
+						form.AddRedEnemy(target.Location, Population - target.Population - 1, Levels.first);
 					}
 					form.Colonies.Remove(target);
 					Debug.WriteLine(form.Colonies.Contains(target));
@@ -172,7 +181,12 @@ namespace ANTWARS
 				{
 					if (Population >= target.Population)
 					{
-						form.AddOliveEnemy(target.Location, Population - target.Population, Levels.first);
+						if (attacker is OliveEnemy)
+							form.AddOliveEnemy(target.Location, Population - target.Population, Levels.first);
+						else if (attacker is BlueEnemy)
+							form.AddBlueEnemy(target.Location, Population - target.Population, Levels.first);
+						else if (attacker is RedEnemy)
+							form.AddRedEnemy(target.Location, Population - target.Population, Levels.first);
 						form.Colonies.Remove(target);
 						Debug.WriteLine(form.Colonies.Contains(target));
 						form.Controls.Remove(target);
