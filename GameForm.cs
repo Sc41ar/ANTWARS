@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;	
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,21 +47,64 @@ namespace ANTWARS
 			InitializeComponent();
 			mainf = mf;
 			Colonies = new List<NeutralColony>();
-			Colonies.Add(new Ally(new Point(75, 100), 20, Levels.first));
-			Colonies.Add(new NeutralColony(new Point(225, 300), 10, Levels.neutral));
-			Colonies.Add(new NeutralColony(new Point(75, 540), 10, Levels.neutral));
-			Colonies.Add(new NeutralColony(new Point(125, 200), 10, Levels.neutral));
-			Colonies.Add(new NeutralColony(new Point(225, 100), 10, Levels.neutral));
-			Colonies.Add(new OliveEnemy(new Point(331, 100), 14, Levels.first));
-			//Colonies.Add(new OliveEnemy(new Point(331, 350), 14, Levels.first));
-			//Colonies.Add(new OliveEnemy(new Point(331, 200), 14, Levels.first));
-			//Colonies.Add(new NeutralColony(new Point(456, 100), 10, Levels.neutral));
-			//Colonies.Add(new NeutralColony(new Point(581, 100), 10, Levels.neutral));
-			//Colonies.Add(new NeutralColony(new Point(706, 100), 10, Levels.neutral));
-
-			Colonies.Add(new BlueEnemy(new Point(456, 100), 14, Levels.first));
-			Colonies.Add(new RedEnemy(new Point(581, 100), 20, Levels.first));
-			Colonies.Add(new IndigoEnemy(new Point(706, 100), 25, Levels.first));
+			string directory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+			using (StreamReader sr = new StreamReader(directory + @"\Lvl1.txt"))
+			{
+				string line;
+				while ((line = sr.ReadLine()) != null)
+				{
+					var info = line.Split('|');
+					switch (info[info.Length - 1])
+					{
+						case "n":
+							{
+								Colonies.Add(
+									  new NeutralColony(
+										  new Point(int.Parse(info[0]), int.Parse(info[1])),
+										  int.Parse(info[2]),
+									(Levels)int.Parse(info[3])));
+							}
+							break;
+						case "a":
+							{
+								AddAllyColony(
+									new Point(int.Parse(info[0]), int.Parse(info[1])),
+									int.Parse(info[2]),
+									(Levels)int.Parse(info[3]));
+							}break;
+						case "o":
+							{
+								AddOliveEnemy(
+									new Point(int.Parse(info[0]), int.Parse(info[1])),
+									int.Parse(info[2]),
+									(Levels)int.Parse(info[3]));
+							}break;
+						case "b":
+							{
+							AddBlueEnemy
+									(new Point(int.Parse(info[0]), int.Parse(info[1])),
+									int.Parse(info[2]),
+									(Levels)int.Parse(info[3]));
+							}
+							break;
+						case "r":
+							{
+								AddRedEnemy(
+									new Point(int.Parse(info[0]), int.Parse(info[1])),
+									int.Parse(info[2]),
+									(Levels)int.Parse(info[3]));
+							}break;
+						case "i":
+							{
+								AddIndigoEnemy(
+									new Point(int.Parse(info[0]), int.Parse(info[1])),
+									int.Parse(info[2]),
+									(Levels)int.Parse(info[3]));
+							}break;
+					}
+					Debug.WriteLine(line);
+				}
+			}
 
 		}
 		/// <summary>
@@ -91,6 +135,12 @@ namespace ANTWARS
 		public void AddRedEnemy(Point location, int population, Levels level)
 		{
 			Colonies.Add(new RedEnemy(location, population, Levels.first));
+			Update();
+		}
+
+		public void AddIndigoEnemy(Point location, int population, Levels level)
+		{
+			Colonies.Add(new IndigoEnemy(location, population, Levels.first));
 			Update();
 		}
 
