@@ -73,6 +73,12 @@
     <Compile Include="RedEnemy.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ResultForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultForm.Designer.cs">
+      <DependentUpon>ResultForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Unit.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -120,6 +126,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultForm.resx">
+      <DependentUpon>ResultForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UpgradeMenuForm.resx">
       <DependentUpon>UpgradeMenuForm.cs</DependentUpon>

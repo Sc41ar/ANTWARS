@@ -151,6 +151,8 @@ namespace ANTWARS
 					Debug.WriteLine(target == null);
 					target.Dispose();
 					target = null;
+					if (target is Enemy)
+						form.numberOfEnemy--;
 					GC.Collect();
 					GC.WaitForPendingFinalizers();
 					Dispose();
@@ -187,6 +189,8 @@ namespace ANTWARS
 							form.AddBlueEnemy(target.Location, Population - target.Population, Levels.first);
 						else if (attacker is RedEnemy)
 							form.AddRedEnemy(target.Location, Population - target.Population, Levels.first);
+						else if (attacker is IndigoEnemy)
+							form.AddIndigoEnemy(target.Location, Population - target.Population, Levels.first);
 						form.Colonies.Remove(target);
 						Debug.WriteLine(form.Colonies.Contains(target));
 						form.Controls.Remove(target);
@@ -194,6 +198,7 @@ namespace ANTWARS
 						Debug.WriteLine(target == null);
 						target.Dispose();
 						target = null;
+						form.numberOfAllies--;
 						GC.Collect();
 						GC.WaitForPendingFinalizers();
 						Dispose();

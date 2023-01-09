@@ -19,6 +19,8 @@ namespace ANTWARS
 		/// ссылка на основную форму для возвращения к ней
 		/// </summary>
 		readonly MainForm mainf;
+		public int numberOfEnemy;
+		public int numberOfAllies;
 		/// <summary>
 		/// список всех колоний
 		/// </summary>
@@ -58,6 +60,7 @@ namespace ANTWARS
 					{
 						case "n":
 							{
+
 								Colonies.Add(
 									  new NeutralColony(
 										  new Point(int.Parse(info[0]), int.Parse(info[1])),
@@ -67,6 +70,7 @@ namespace ANTWARS
 							break;
 						case "a":
 							{
+								numberOfAllies++;
 								AddAllyColony(
 									new Point(int.Parse(info[0]), int.Parse(info[1])),
 									int.Parse(info[2]),
@@ -74,6 +78,7 @@ namespace ANTWARS
 							}break;
 						case "o":
 							{
+								numberOfEnemy++;
 								AddOliveEnemy(
 									new Point(int.Parse(info[0]), int.Parse(info[1])),
 									int.Parse(info[2]),
@@ -81,6 +86,7 @@ namespace ANTWARS
 							}break;
 						case "b":
 							{
+								numberOfEnemy++;
 							AddBlueEnemy
 									(new Point(int.Parse(info[0]), int.Parse(info[1])),
 									int.Parse(info[2]),
@@ -89,6 +95,7 @@ namespace ANTWARS
 							break;
 						case "r":
 							{
+								numberOfEnemy++;
 								AddRedEnemy(
 									new Point(int.Parse(info[0]), int.Parse(info[1])),
 									int.Parse(info[2]),
@@ -96,6 +103,7 @@ namespace ANTWARS
 							}break;
 						case "i":
 							{
+								numberOfEnemy++;
 								AddIndigoEnemy(
 									new Point(int.Parse(info[0]), int.Parse(info[1])),
 									int.Parse(info[2]),
@@ -202,6 +210,22 @@ namespace ANTWARS
 				item.PopulationGrowth();
 			}
 			ticks++;
+			if (numberOfAllies < 1)
+			{
+				mainf.Show();
+				ResultForm a = new ResultForm("Lose", this);
+				a.Show();
+				a.Location = Cursor.Position;
+				timer1.Stop();
+			}
+			if (numberOfEnemy < 1)
+			{
+				mainf.Show();
+				ResultForm a = new ResultForm("victory", this);
+				a.Show();
+				a.Location = Cursor.Position;
+				timer1.Stop();
+			}	
 		}
 	}
 }
