@@ -15,6 +15,7 @@ namespace ANTWARS
 {
 	internal partial class GameForm : Form
 	{
+		int level;
 		/// <summary>
 		/// ссылка на основную форму для возвращения к ней
 		/// </summary>
@@ -121,6 +122,7 @@ namespace ANTWARS
 			InitializeComponent();
 			mainf = mf;
 			Colonies = new List<NeutralColony>();
+			level = Level;
 			LevelInit(Level);
 
 		}
@@ -226,7 +228,7 @@ namespace ANTWARS
 				a.Show();
 				a.Location = Cursor.Position;
 				timer1.Stop();
-				mainf.currentLevel++;
+				mainf.currentLevel = level + 1;
 				mainf.LevelRecord();
 
 			}

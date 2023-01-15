@@ -42,5 +42,11 @@ namespace ANTWARS
 			sw.Write(currentLevel);
 			sw.Close();
 		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			LevelTabel tabel = new LevelTabel(this);
+			tabel.Show();
+		}
 	}
 }
