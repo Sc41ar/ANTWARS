@@ -30,7 +30,7 @@ namespace ANTWARS
 
 			int seed = (int)DateTime.Now.Ticks;
 			Random rnd = new Random(seed);
-			timeToAttack = rnd.Next(15) + 7;
+			timeToAttack = rnd.Next(15) + 2;
 			Debug.WriteLine("Время до Красного нападения: " + timeToAttack);
 			Level = level;
 			Size = new Size(75, 75);

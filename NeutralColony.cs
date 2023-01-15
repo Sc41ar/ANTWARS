@@ -161,7 +161,6 @@ namespace ANTWARS
 		{
 			base.OnMouseEnter(e);
 			_isMouseEntered = true;
-			Debug.WriteLine(Location.ToString());
 			Invalidate();
 
 		}

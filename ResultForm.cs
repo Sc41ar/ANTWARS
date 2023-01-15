@@ -13,18 +13,20 @@ namespace ANTWARS
 {
 	public partial class ResultForm : Form
 	{
+		internal MainForm mainForm;
 		internal GameForm gf = null;
 		private int ticks;
 		public ResultForm()
 		{
 			InitializeComponent();
 		}
-		internal ResultForm(string text, GameForm gf)
+		internal ResultForm(string text, GameForm gf, MainForm mainForm)
 		{
 			InitializeComponent();
 			Text = text;
 			this.gf = gf;
 			gf.Close();
+			this.mainForm = mainForm;
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
@@ -34,6 +36,7 @@ namespace ANTWARS
 		}
 		private void timer1_Tick(object sender, EventArgs e)
 		{
+			ticks++;
 			if(ticks % 5 == 0)
 				Close();
 			Dispose();

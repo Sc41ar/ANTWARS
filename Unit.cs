@@ -131,30 +131,40 @@ namespace ANTWARS
 						form.AddAllyColony(target.Location, Population - target.Population, Levels.first);
 						Ally ally = (Ally)attacker;
 						ally.Money += ((int)target.Level + 1) * 40;
+						form.numberOfAllies++;
 					}
 					else if (attacker is OliveEnemy)
 					{
 						form.AddOliveEnemy(target.Location, Population - target.Population, Levels.first);
+						form.numberOfEnemy++;
 					}
 					else if (attacker is BlueEnemy)
 					{
 						form.AddBlueEnemy(target.Location, Population - target.Population - 1, Levels.first);
+						form.numberOfEnemy++;
 					}
 					else if(attacker is RedEnemy)
 					{
 						form.AddRedEnemy(target.Location, Population - target.Population - 1, Levels.first);
+						form.numberOfEnemy++;
 					}
-					form.Colonies.Remove(target);
-					Debug.WriteLine(form.Colonies.Contains(target));
-					form.Controls.Remove(target);
-					Debug.WriteLine(form.Controls.Contains(target));
-					Debug.WriteLine(target == null);
-					target.Dispose();
-					target = null;
+					else if(attacker is IndigoEnemy)
+					{
+						form.AddIndigoEnemy(target.Location, Population - target.Population - 1, Levels.first);
+						form.numberOfEnemy++;
+					}
+
 					if (target is Enemy)
 						form.numberOfEnemy--;
+					else if (target is Ally)
+						form.numberOfAllies--;
+					form.Colonies.Remove(target);
+					form.Controls.Remove(target);
+					target.Dispose();
+					target = null;
 					GC.Collect();
 					GC.WaitForPendingFinalizers();
+					
 					Dispose();
 				}
 				else
@@ -192,10 +202,7 @@ namespace ANTWARS
 						else if (attacker is IndigoEnemy)
 							form.AddIndigoEnemy(target.Location, Population - target.Population, Levels.first);
 						form.Colonies.Remove(target);
-						Debug.WriteLine(form.Colonies.Contains(target));
 						form.Controls.Remove(target);
-						Debug.WriteLine(form.Controls.Contains(target));
-						Debug.WriteLine(target == null);
 						target.Dispose();
 						target = null;
 						form.numberOfAllies--;

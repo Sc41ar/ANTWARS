@@ -62,6 +62,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="LevelEventArgs.cs" />
+    <Compile Include="LevelTabel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelTabel.Designer.cs">
+      <DependentUpon>LevelTabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="OliveEnemy.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -109,6 +115,9 @@
     </Compile>
     <EmbeddedResource Include="GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelTabel.resx">
+      <DependentUpon>LevelTabel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;	
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -40,17 +40,11 @@ namespace ANTWARS
 		{
 			throw new NotImplementedException();
 		}
-		/// <summary>
-		/// задаем прикольчик, массив малышей
-		/// </summary>
-		/// <param name="mf"></param>
-		public GameForm(MainForm mf)
+
+		private void LevelInit(int Level)
 		{
-			InitializeComponent();
-			mainf = mf;
-			Colonies = new List<NeutralColony>();
 			string directory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-			using (StreamReader sr = new StreamReader(directory + @"\Lvl1.txt"))
+			using (StreamReader sr = new StreamReader(directory + @"\Lvl" + Level.ToString() + ".txt"))
 			{
 				string line;
 				while ((line = sr.ReadLine()) != null)
@@ -60,7 +54,7 @@ namespace ANTWARS
 					{
 						case "n":
 							{
-
+								numberOfEnemy++;
 								Colonies.Add(
 									  new NeutralColony(
 										  new Point(int.Parse(info[0]), int.Parse(info[1])),
@@ -75,7 +69,8 @@ namespace ANTWARS
 									new Point(int.Parse(info[0]), int.Parse(info[1])),
 									int.Parse(info[2]),
 									(Levels)int.Parse(info[3]));
-							}break;
+							}
+							break;
 						case "o":
 							{
 								numberOfEnemy++;
@@ -83,14 +78,15 @@ namespace ANTWARS
 									new Point(int.Parse(info[0]), int.Parse(info[1])),
 									int.Parse(info[2]),
 									(Levels)int.Parse(info[3]));
-							}break;
+							}
+							break;
 						case "b":
 							{
 								numberOfEnemy++;
-							AddBlueEnemy
-									(new Point(int.Parse(info[0]), int.Parse(info[1])),
-									int.Parse(info[2]),
-									(Levels)int.Parse(info[3]));
+								AddBlueEnemy
+										(new Point(int.Parse(info[0]), int.Parse(info[1])),
+										int.Parse(info[2]),
+										(Levels)int.Parse(info[3]));
 							}
 							break;
 						case "r":
@@ -100,7 +96,8 @@ namespace ANTWARS
 									new Point(int.Parse(info[0]), int.Parse(info[1])),
 									int.Parse(info[2]),
 									(Levels)int.Parse(info[3]));
-							}break;
+							}
+							break;
 						case "i":
 							{
 								numberOfEnemy++;
@@ -108,11 +105,23 @@ namespace ANTWARS
 									new Point(int.Parse(info[0]), int.Parse(info[1])),
 									int.Parse(info[2]),
 									(Levels)int.Parse(info[3]));
-							}break;
+							}
+							break;
 					}
-					Debug.WriteLine(line);
 				}
 			}
+		}
+
+		/// <summary>
+		/// задаем список колоний
+		/// </summary>
+		/// <param name="mf"></param>
+		public GameForm(MainForm mf, int Level)
+		{
+			InitializeComponent();
+			mainf = mf;
+			Colonies = new List<NeutralColony>();
+			LevelInit(Level);
 
 		}
 		/// <summary>
@@ -182,6 +191,48 @@ namespace ANTWARS
 			}
 		}
 
+		internal void ColonyCount()
+		{
+			int allies=0;
+			int enemies=0;
+			foreach (var a  in Colonies)
+			{
+				if(a is Ally)
+					allies++;
+				else
+					enemies++;
+			}
+			numberOfAllies = allies;
+			numberOfEnemy = enemies;
+			ResultCheck();
+		}
+		 
+		internal void ResultCheck()
+		{
+			Debug.WriteLine(numberOfEnemy);
+			Debug.WriteLine(numberOfAllies);
+			if (numberOfAllies < 1)
+			{
+				mainf.Show();
+				ResultForm a = new ResultForm("Lose", this, mainf);
+				a.Show();
+				a.Location = Cursor.Position;
+				timer1.Stop();
+			}
+			if (numberOfEnemy < 1)
+			{
+				mainf.Show();
+				ResultForm a = new ResultForm("victory", this, mainf);
+				a.Show();
+				a.Location = Cursor.Position;
+				timer1.Stop();
+				mainf.currentLevel++;
+				mainf.LevelRecord();
+
+			}
+			return;
+		}
+
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
@@ -210,22 +261,7 @@ namespace ANTWARS
 				item.PopulationGrowth();
 			}
 			ticks++;
-			if (numberOfAllies < 1)
-			{
-				mainf.Show();
-				ResultForm a = new ResultForm("Lose", this);
-				a.Show();
-				a.Location = Cursor.Position;
-				timer1.Stop();
-			}
-			if (numberOfEnemy < 1)
-			{
-				mainf.Show();
-				ResultForm a = new ResultForm("victory", this);
-				a.Show();
-				a.Location = Cursor.Position;
-				timer1.Stop();
-			}	
+			ColonyCount();
 		}
 	}
 }
