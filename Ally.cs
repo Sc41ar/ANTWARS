@@ -84,10 +84,10 @@ namespace ANTWARS
 			//база.
 			base.OnLevelChanged(e);
 			//изменение характеристик происходит в другом методе,
-			//здесь же меняем спрайт таким хитрым способом;)
+			//здесь же меняем спрайт таким хитрым способом
 			string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName +
 				@"\Resources\" + Fraction.ToString() + ((int)Level).ToString() + ".png";
-			BackgroundImage = Bitmap.FromFile(path); // ну и меняем собсна
+			BackgroundImage = Bitmap.FromFile(path); // ну и меняем 
 		}
 		/// <summary>
 		/// улучшение
@@ -187,11 +187,7 @@ namespace ANTWARS
 			{
 				//выбрасывает иногда исключение disposed object
 				//все потому что я так намудрил в том классе,
-				//что лучше в него не смотреть никогда,
-				//
-				//
-				//
-				//даже под страхом смерти
+				//что лучше в него не смотреть 
 				_ = new Unit(centre, Population, this, target) //черточка вот эта имба
 				{
 					Parent = this.Parent
@@ -201,11 +197,11 @@ namespace ANTWARS
 			catch
 			{
 				//ловим ошибочки
-				Debug.WriteLine("У ВАС СМЕРТЬ!!!!!!!!!!!!!!!!!!!!!!!!!");
+				Debug.WriteLine("!!!!!!!!!!!!!!!");
 			}
 		}
 		/// <summary>
-		/// проверяем что у нас в карманах, где мышка и прочее
+		/// проверяем , где мышка и атакуем
 		/// .флажок убираем еще
 		/// </summary>
 		/// <param name="e"></param>
@@ -254,7 +250,7 @@ namespace ANTWARS
 
 				}
 			}
-			Invalidate();//инвалид
+			Invalidate();//обновление
 		}
 	}
 }

@@ -65,7 +65,7 @@
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.GameStart);
 			this.Name = "MainForm";
-			this.Text = "Form1";
+			this.Text = "MainForm";
 			this.ResumeLayout(false);
 
 		}

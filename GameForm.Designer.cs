@@ -51,7 +51,6 @@
 			this.MaximumSize = new System.Drawing.Size(1000, 1000);
 			this.Name = "GameForm";
 			this.Text = "GameForm";
-			this.Deactivate += new System.EventHandler(this.GameForm_Deactivate);
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameForm_Paint);
 			this.ResumeLayout(false);
 

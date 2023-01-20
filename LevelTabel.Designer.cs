@@ -255,7 +255,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.IndianRed;
-			this.ClientSize = new System.Drawing.Size(734, 461);
+			this.ClientSize = new System.Drawing.Size(661, 461);
 			this.Controls.Add(this.button20);
 			this.Controls.Add(this.button19);
 			this.Controls.Add(this.button18);

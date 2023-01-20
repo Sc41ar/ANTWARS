@@ -59,9 +59,9 @@ namespace ANTWARS
 			BackgroundImageLayout = ImageLayout.Stretch;
 			deltax = Destination.X - Location.X;
 			deltay = Destination.Y - Location.Y;
-			xStep = deltax / 60;
-			yStep = deltay / 60;
-			tiger.Interval = 20;
+			xStep = deltax / 120;
+			yStep = deltay / 120;
+			tiger.Interval = 10;
 			tiger.Tick += Tiger_Tick;
 			tiger.Enabled = true;
 			tiger.Start();

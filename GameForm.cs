@@ -37,11 +37,6 @@ namespace ANTWARS
 			this.Paint += GameForm_Paint;
 		}
 
-		private void GameForm_Paint1(object sender, PaintEventArgs e)
-		{
-			throw new NotImplementedException();
-		}
-
 		private void LevelInit(int Level)
 		{
 			string directory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
@@ -127,7 +122,7 @@ namespace ANTWARS
 
 		}
 		/// <summary>
-		/// мне казалось что это удобно, те перь не уверен
+		/// мне казалось что это удобное создание колоний
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="population"></param>
@@ -164,16 +159,6 @@ namespace ANTWARS
 		}
 
 		/// <summary>
-		/// думал будет вызывать, когда закрывается, а он вызывает даже, если свернуть
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GameForm_Deactivate(object sender, EventArgs e)
-		{
-			//mainf.Show();
-			//mainf.Close();
-		}
-		/// <summary>
 		/// как онпайнт
 		/// </summary>
 		/// <param name="sender"></param>
@@ -192,7 +177,9 @@ namespace ANTWARS
 				item.Update();
 			}
 		}
-
+		/// <summary>
+		/// необходимо для корректного отображения проигрыша/победы
+		/// </summary>
 		internal void ColonyCount()
 		{
 			int allies=0;
@@ -208,7 +195,9 @@ namespace ANTWARS
 			numberOfEnemy = enemies;
 			ResultCheck();
 		}
-		 
+		 /// <summary>
+		 /// проверка на победу или проигрыш
+		 /// </summary>
 		internal void ResultCheck()
 		{
 			Debug.WriteLine(numberOfEnemy);
